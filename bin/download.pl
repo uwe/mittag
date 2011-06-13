@@ -16,5 +16,6 @@ my $path = $FindBin::Bin . '/../data';
 my $downloader = Mittag::Downloader->new({path => $path});
 my @places = useall 'Mittag::Place';
 foreach my $class (@places) {
+    print "$class\n";
     $class->download($downloader);
 }

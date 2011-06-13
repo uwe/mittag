@@ -33,7 +33,7 @@ sub store {
     my ($self, $data, $name) = @_;
 
     my $file = $self->path . '/' . $name;
-    File::Slurp::write_file $file, $data;
+    File::Slurp::write_file $file, {binmode => ':utf8'}, $data;
 }
 
 sub html2txt {
@@ -50,7 +50,7 @@ sub html2txt {
 sub pdf2txt {
     my ($self, $name) = @_;
 
-    my $file = $self->tmpdir . '/' . $name;
+    my $file = $self->path . '/' . $name;
 
     my $txt;
     IPC::Run3::run3 [qw/pdftotext -raw/, $file, '-'], undef, \$txt;

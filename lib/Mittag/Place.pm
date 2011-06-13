@@ -14,10 +14,17 @@ __PACKAGE__->mk_accessors(qw/context/);
 
 
 sub _expect {
-    my ($self, $text, $data) = @_;
+    my ($self, $text, $data, $start) = @_;
 
-    if ($data ne $text) {
-        die "expected: '$text', found: '$data'";
+    if ($start) {
+        # 0 - $data starts with $text (can be longer)
+        if (index($data, $text)) {
+            die "expected: '$text', found '$data'";
+        }
+    } else {
+        if ($data ne $text) {
+            die "expected: '$text', found: '$data'";
+        }
     }
 }
 
