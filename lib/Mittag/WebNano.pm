@@ -24,8 +24,6 @@ sub _build_schema {
 sub _build_tt {
     my ($self) = @_;
 
-    warn $FindBin::Bin;
-
     return Template->new({
         INCLUDE_PATH => $FindBin::Bin . '/tmpl',
         POST_CHOMP   => 1,
