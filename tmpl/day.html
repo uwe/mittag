@@ -1,0 +1,34 @@
+[% USE Komma %]
+[% dow = ['', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'] %]
+<html>
+  <head>
+    <title>Tagesangebote: [% date.dmy('.') %]</title>
+  </head>
+  <body>
+    <h1>
+      [% IF prev %]<a href="[% prev.ymd('-') %]">[&lt;&lt;]</a>[% END %]
+      Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
+      [% IF next %]<a href="[% next.ymd('-') %]">[&gt;&gt;]</a>[% END %]
+    </h1>
+
+    <table border="1" cellpadding="4" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Lokal</th>
+          <th>Mittagstisch</th>
+          <th>Preis</th>
+        </tr>
+      </thead>
+      <tbody>
+[% FOREACH offer = OFFERS %]
+        <tr>
+          <td>[% offer.place.name | html %]</td>
+          <td>[% offer.name | html %]</td>
+          <td>[% offer.price | komma2 %]&euro;</td>
+        </tr>
+[% END %]
+      </tbody>
+    </table>
+
+  </body>
+</html>
