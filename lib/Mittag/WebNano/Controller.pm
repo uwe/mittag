@@ -35,7 +35,7 @@ sub day_action {
 
     # nothing daily - holiday?
     unless (@daily) {
-        my $next_date = $self->_next_date($date);
+        my $next_date = $self->_next_date($date, 1);
 
         my $res = $self->req->new_response;
         $res->redirect('/day/' . $next_date->ymd('-'));
@@ -49,27 +49,37 @@ sub day_action {
 
     my @offers = sort { $a->place->name cmp $b->place->name or $a->price <=> $b->price } (@daily, @weekly);
 
+    my $vars = {
+        OFFERS    => \@offers,
+        date      => $date,
+        prev_date => $self->_prev_date($date->clone->subtract(days => 1)) || undef,
+        next_date => $self->_next_date($date->clone->add(     days => 1)) || undef
+    };
+
     my $out = '';
-    $self->app->tt->process('day.html', {OFFERS => \@offers, date => $date}, \$out);
+    $self->app->tt->process('day.html', $vars, \$out);
 
     return $out;
 }
 
-sub _next_date {
-    my ($self, $date) = @_;
+# same date or before
+sub _prev_date {
+    my ($self, $date, $seek) = @_;
 
     my $daily = $self->app->rs('DailyOffer')->search(
-        {date => {'>=' => $date->ymd('-')}},
-        {order_by => {-asc => 'date'}},
+        {date => {'<=' => $date->ymd('-')}},
+        {order_by => {-desc => 'date'}, rows => 1},
     )->single;
 
     if ($daily) {
         return $daily->date;
     }
 
+    return unless $seek;
+
     $daily = $self->app->rs('DailyOffer')->search(
         {},
-        {order_by => {-desc => 'date'}},
+        {order_by => {-asc => 'date'}, rows => 1},
     )->single;
 
     if ($daily) {
@@ -77,7 +87,35 @@ sub _next_date {
     }
 
     # database empty?
-    return undef;
+    return;
+}
+
+# same date or after
+sub _next_date {
+    my ($self, $date, $seek) = @_;
+
+    my $daily = $self->app->rs('DailyOffer')->search(
+        {date => {'>=' => $date->ymd('-')}},
+        {order_by => {-asc => 'date'}, rows => 1},
+    )->single;
+
+    if ($daily) {
+        return $daily->date;
+    }
+
+    return unless $seek;
+
+    $daily = $self->app->rs('DailyOffer')->search(
+        {},
+        {order_by => {-desc => 'date'}, rows => 1},
+    )->single;
+
+    if ($daily) {
+        return $daily->date;
+    }
+
+    # database empty?
+    return;
 }
 
 

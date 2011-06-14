@@ -55,7 +55,7 @@ sub extract {
             push @dates, _date(shift @data);
         } else {
             # holiday?
-            warn "'$line' interpreted as holiday.";
+            warn "'$line' interpreted as holiday";
             shift @data;
             push @dates, undef;
         }

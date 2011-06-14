@@ -6,9 +6,9 @@
   </head>
   <body>
     <h1>
-      [% IF prev %]<a href="[% prev.ymd('-') %]">[&lt;&lt;]</a>[% END %]
+      [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]">[&lt;&lt;]</a>[% END %]
       Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
-      [% IF next %]<a href="[% next.ymd('-') %]">[&gt;&gt;]</a>[% END %]
+      [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]">[&gt;&gt;]</a>[% END %]
     </h1>
 
     <table border="1" cellpadding="4" cellspacing="0">
