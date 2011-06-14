@@ -7,8 +7,7 @@ use warnings;
 
 use base qw/Class::Accessor::Faster/;
 
-use Carp       qw/croak/;
-use Data::Dump qw/pp/;
+use Carp qw/croak/;
 use DateTime;
 
 
@@ -77,6 +76,14 @@ sub __from_to {
         return (
             $dt->clone->subtract(days => 4)->ymd('-'),
             $dt->ymd('-'),
+        );
+    }
+    elsif ($dt->dow < 5) {
+        warn sprintf("Unexpected weekday (%d): %s", $dt->dow, $dt->ymd('-'));
+
+        return (
+            $dt->clone->subtract(days => $dt->dow - 1)->ymd('-'),
+            $dt->clone->add(days => 5 - $dt->dow)->ymd('-'),
         );
     }
     else {

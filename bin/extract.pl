@@ -20,6 +20,11 @@ my $path   =    $FindBin::Bin . '/../data';
 my $schema   = Mittag::Schema->connect_with_config($config);
 my $importer = Mittag::Importer->new({schema => $schema});
 my @places = useall 'Mittag::Place';
+
+if ($ARGV[0]) {
+    @places = grep { /Mittag::Place::$ARGV[0]/ } @places;
+}
+
 foreach my $class (@places) {
     # load file
     my $file = $path . '/' . $class->file;
