@@ -11,6 +11,8 @@ use base qw/Mittag::Place/;
 
 sub name { 'Finanzkantine' }
 sub file { 'finanzkantine.txt' }
+sub address { 'Gänsemarkt 36, 20354 Hamburg' }
+sub geocode { [53.55527, 9.98767] }
 
 
 my @weekdays = qw(Mo Di Mi Do Fr);

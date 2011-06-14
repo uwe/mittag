@@ -9,6 +9,8 @@ use base qw/Mittag::Place/;
 
 sub name { 'Block House' }
 sub file { 'block-house.txt' }
+sub address { 'Gänsemarkt Passage, 20354 Hamburg' }
+sub geocode { [53.55535, 9.98941] }
 
 
 my @weekdays = qw(Montag Dienstag Mittwoch Donnerstag Freitag);

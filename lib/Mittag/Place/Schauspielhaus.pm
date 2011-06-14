@@ -12,6 +12,8 @@ use base qw/Mittag::Place/;
 
 sub name { 'Schauspielhaus' }
 sub file { 'schauspielhaus.html' }
+sub address { 'Kirchenallee 39, 20099 Hamburg' }
+sub geocode { [53.5545378, 10.008363] }
 
 
 my @headers = (

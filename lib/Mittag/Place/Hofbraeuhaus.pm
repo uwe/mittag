@@ -12,6 +12,8 @@ use base qw/Mittag::Place/;
 
 sub name { 'Hofbräuhaus' }
 sub file { 'hofbraeuhaus.txt' }
+sub address { 'Esplanade 6, 20354 Hamburg' }
+sub geocode { [53.55759, 9.99149] }
 
 
 sub download {
