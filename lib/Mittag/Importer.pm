@@ -24,7 +24,7 @@ sub save_weekly {
     my ($from, $to) = __from_to($arg{week});
 
     return $self->schema->resultset('Mittag::Schema::WeeklyOffer')->find_or_create(
-        place_id  => $id,
+        place_id  => $arg{id},
         from_date => $from,
         to_date   => $to,
         name      => $arg{meal},
@@ -39,10 +39,8 @@ sub save {
         croak "$_ missing" unless $arg{$_};
     }
 
-    my $place = $self->_place_by_name($arg{name});
-
     return $self->schema->resultset('Mittag::Schema::DailyOffer')->find_or_create({
-        place_id  => $id,
+        place_id  => $arg{id},
         date      => $arg{date},
         name      => $arg{meal},
         price     => $arg{price},
