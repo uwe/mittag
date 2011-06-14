@@ -37,5 +37,14 @@ sub rs {
     return $self->schema->resultset('Mittag::Schema::' . $model);
 }
 
+sub render {
+    my ($self, $tmpl, $vars) = @_;
+
+    my $out = '';
+    $self->tt->process($tmpl, $vars, \$out) or die $self->tt->error;
+
+    return $out;
+}
+
 
 1;

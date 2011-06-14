@@ -7,8 +7,9 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub name { 'Gerichtskantine' }
-sub file { 'gerichtskantine.txt' }
+sub id      { 3 }
+sub file    { 'gerichtskantine.txt' }
+sub name    { 'Gerichtskantine' }
 sub address { 'Sievekingplatz 1, 20355 Hamburg' }
 sub geocode { [53.5561, 9.97656] }
 
@@ -85,8 +86,8 @@ sub extract {
             }
 
             $importer->save(
+                id    => $self->id,
                 date  => $date,
-                name  => $self->name,
                 meal  => $meal,
                 price => $price,
             );

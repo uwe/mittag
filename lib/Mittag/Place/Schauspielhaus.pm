@@ -10,8 +10,9 @@ use HTML::TableExtract;
 use base qw/Mittag::Place/;
 
 
-sub name { 'Schauspielhaus' }
-sub file { 'schauspielhaus.html' }
+sub id      { 5 }
+sub file    { 'schauspielhaus.html' }
+sub name    { 'Schauspielhaus' }
 sub address { 'Kirchenallee 39, 20099 Hamburg' }
 sub geocode { [53.5545378, 10.008363] }
 
@@ -68,8 +69,8 @@ sub extract {
 
         foreach (@{$days[$i]}) {
             $importer->save(
+                id    => $self->id,
                 date  => $date,
-                name  => $self->name,
                 meal  => $_->[0],
                 price => $_->[1],
             );

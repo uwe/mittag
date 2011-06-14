@@ -7,8 +7,9 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub name { 'Soup & Friends' }
-sub file { 'soup-friends.txt' }
+sub id      { 6 }
+sub file    { 'soup-friends.txt' }
+sub name    { 'Soup & Friends' }
 sub address { 'Valentinskamp 18, 20354 Hamburg' }
 sub geocode { [53.55504, 9.98615] }
 
@@ -55,8 +56,8 @@ sub extract {
         next if $meal->[0] eq $meal->[1];
 
         $importer->save(
+            id    => $self->id,
             date  => $date->ymd('-'),
-            name  => $self->name,
             meal  => $meal->[0],
             price => $meal->[1],
         );
@@ -65,8 +66,8 @@ sub extract {
         $meal = $self->_meal(\@data);
 
         $importer->save(
+            id    => $self->id,
             date  => $date->ymd('-'),
-            name  => $self->name,
             meal  => $meal->[0],
             price => $meal->[1],
         );

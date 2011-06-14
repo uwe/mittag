@@ -1,7 +1,7 @@
 package Mittag::Schema::WeeklyOffer;
 
 use namespace::autoclean;
-use DBIx::Class::Candy -components => [qw/InflateColumn::DateTime/];
+use DBIx::Class::Candy -components => [qw/InflateColumn::DateTime +Mittag::Schema::Component::Place/];
 
 
 table 'weekly_offer';
@@ -14,8 +14,6 @@ column name      => {data_type => 'VARCHAR', is_nullable => 0};
 column price     => {data_type => 'DECIMAL', is_nullable => 0};
 
 primary_key 'id';
-
-belongs_to qw/place Mittag::Schema::Place place_id/;
 
 
 1;

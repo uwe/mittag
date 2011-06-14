@@ -22,7 +22,7 @@
       <tbody>
 [% FOREACH offer = OFFERS %]
         <tr>
-          <td>[% offer.place.name | html %]</td>
+          <td><a href="/place/[% offer.place.id %]">[% offer.place.name | html %]</a></td>
           <td>[% offer.name | html %]</td>
           <td>[% offer.price | komma2 %]&euro;</td>
         </tr>

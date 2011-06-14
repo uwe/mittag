@@ -17,16 +17,14 @@ __PACKAGE__->mk_ro_accessors(qw/schema/);
 sub save_weekly {
     my ($self, %arg) = @_;
 
-    foreach (qw/name week meal price/) {
+    foreach (qw/id week meal price/) {
         croak "$_ missing" unless $arg{$_};
     }
-
-    my $place = $self->_place_by_name($arg{name});
 
     my ($from, $to) = __from_to($arg{week});
 
     return $self->schema->resultset('Mittag::Schema::WeeklyOffer')->find_or_create(
-        place_id  => $place->id,
+        place_id  => $id,
         from_date => $from,
         to_date   => $to,
         name      => $arg{meal},
@@ -37,25 +35,17 @@ sub save_weekly {
 sub save {
     my ($self, %arg) = @_;
 
-    foreach (qw/name date meal price/) {
+    foreach (qw/id date meal price/) {
         croak "$_ missing" unless $arg{$_};
     }
 
     my $place = $self->_place_by_name($arg{name});
 
     return $self->schema->resultset('Mittag::Schema::DailyOffer')->find_or_create({
-        place_id  => $place->id,
+        place_id  => $id,
         date      => $arg{date},
         name      => $arg{meal},
         price     => $arg{price},
-    });
-}
-
-sub _place_by_name {
-    my ($self, $name) = @_;
-
-    return $self->schema->resultset('Mittag::Schema::Place')->find_or_create({
-        name => $name,
     });
 }
 

@@ -7,6 +7,16 @@ use base qw/WebNano::Controller/;
 
 use DateTime;
 
+use Mittag::Places;
+
+
+sub redirect {
+    my ($self, $url) = @_;
+
+    my $res = $self->req->new_response;
+    $res->redirect($url);
+    return $res;
+}
 
 sub index_action {
     my ($self) = @_;
@@ -16,9 +26,23 @@ sub index_action {
         $today = $self->_next_date($today);
     }
 
-    my $res = $self->req->new_response;
-    $res->redirect('/day/' . $today->ymd('-'));
-    return $res;
+    return $self->redirect('/day/' . $today->ymd('-'));
+}
+
+sub place_action {
+    my ($self, $place_id) = @_;
+
+    my $place = Mittag::Places->place_by_id($place_id);
+
+    return $self->redirect('/places') unless $place;
+
+    return $self->app->render('place.html', {place => $place});
+}
+
+sub places_action {
+    my ($self) = @_;
+
+    return $self->app->render('places.html');
 }
 
 sub day_action {
@@ -53,13 +77,10 @@ sub day_action {
         OFFERS    => \@offers,
         date      => $date,
         prev_date => $self->_prev_date($date->clone->subtract(days => 1)) || undef,
-        next_date => $self->_next_date($date->clone->add(     days => 1)) || undef
+        next_date => $self->_next_date($date->clone->add(     days => 1)) || undef,
     };
 
-    my $out = '';
-    $self->app->tt->process('day.html', $vars, \$out);
-
-    return $out;
+    return $self->app->render('day.html', $vars);
 }
 
 # same date or before

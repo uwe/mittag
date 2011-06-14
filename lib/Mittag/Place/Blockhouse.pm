@@ -7,8 +7,9 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub name { 'Block House' }
-sub file { 'block-house.txt' }
+sub id      { 1 }
+sub file    { 'block-house.txt' }
+sub name    { 'Block House' }
 sub address { 'Gänsemarkt Passage, 20354 Hamburg' }
 sub geocode { [53.55535, 9.98941] }
 
@@ -69,8 +70,8 @@ sub _extract_week {
         if (@weekly) {
             while (my $weekly = shift @weekly) {
                 $importer->save_weekly(
+                    id    => $self->id,
                     week  => $date,
-                    name  => $self->name,
                     meal  => $weekly->[0],
                     price => $weekly->[1],
                 );
@@ -98,8 +99,8 @@ sub _extract_week {
         }
 
         $importer->save(
+            id    => $self->id,
             date  => $date,
-            name  => $self->name,
             meal  => $meal,
             price => $price,
         );

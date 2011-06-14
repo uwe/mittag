@@ -9,8 +9,9 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub name { 'Finanzkantine' }
-sub file { 'finanzkantine.txt' }
+sub id      { 2 }
+sub file    { 'finanzkantine.txt' }
+sub name    { 'Finanzkantine' }
 sub address { 'Gänsemarkt 36, 20354 Hamburg' }
 sub geocode { [53.55527, 9.98767] }
 
@@ -82,8 +83,8 @@ sub extract {
             }
 
             $importer->save(
+                id    => $self->id,
                 date  => $date->ymd('-'),
-                name  => $self->name,
                 meal  => $meal,
                 price => $price,
             );

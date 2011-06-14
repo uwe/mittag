@@ -9,9 +9,9 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-
-sub name { 'Hofbräuhaus' }
-sub file { 'hofbraeuhaus.txt' }
+sub id      { 4 }
+sub file    { 'hofbraeuhaus.txt' }
+sub name    { 'Hofbräuhaus' }
 sub address { 'Esplanade 6, 20354 Hamburg' }
 sub geocode { [53.55759, 9.99149] }
 
@@ -62,8 +62,8 @@ sub extract {
             $price =~ s/,/./;
 
             $importer->save_weekly(
+                id    => $self->id,
                 week  => $week,
-                name  => $self->name,
                 meal  => $meal,
                 price => $price,
             );
