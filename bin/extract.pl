@@ -9,16 +9,21 @@ use FindBin;
 use Module::Find qw/useall/;
 
 use lib $FindBin::Bin . '/../lib';
+use Mittag::Config;
 use Mittag::Importer;
 use Mittag::Schema;
 
 
-my $config = do $FindBin::Bin . '/../config.pl';
-my $path   =    $FindBin::Bin . '/../data';
+my $config = Mittag::Config->new($FindBin::Bin . '/..');
+my $path   = $FindBin::Bin . '/../data';
 
 
 my $schema   = Mittag::Schema->connect_with_config($config);
-my $importer = Mittag::Importer->new({schema => $schema});
+my $importer = Mittag::Importer->new({
+    config => $config,
+    schema => $schema,
+});
+
 my @places = useall 'Mittag::Place';
 
 if ($ARGV[0]) {

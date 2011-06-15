@@ -13,7 +13,7 @@ use IPC::Run3   qw//;
 use LWP::Simple qw//;
 
 
-__PACKAGE__->mk_ro_accessors(qw/path/);
+__PACKAGE__->mk_ro_accessors(qw/config path/);
 
 
 sub get {

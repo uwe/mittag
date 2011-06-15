@@ -11,7 +11,7 @@ use Carp qw/croak/;
 use DateTime;
 
 
-__PACKAGE__->mk_ro_accessors(qw/schema/);
+__PACKAGE__->mk_ro_accessors(qw/config schema/);
 
 
 sub save_weekly {

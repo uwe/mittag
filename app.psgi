@@ -6,10 +6,11 @@ use warnings;
 use FindBin;
 
 use lib $FindBin::Bin . '/lib';
+use Mittag::Config;
 use Mittag::WebNano;
 
 
-my $config = do $FindBin::Bin . '/config.pl';
+my $config  = Mittag::Config->new($FindBin::Bin);
+my $webnano = Mittag::WebNano->new(config => $config);
 
-
-Mittag::WebNano->new(config => $config)->psgi_app;
+my $app = $webnano->psgi_app;
