@@ -19,7 +19,7 @@ sub new {
     # merge local config (shallow merge)
     if (-f $local_file) {
         my $local = do $local_file;
-        $config = { %$local, %$config };
+        $config = { %$config, %$local };
     }
 
     return bless $config, $class;
