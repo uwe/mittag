@@ -14,6 +14,13 @@ use DateTime;
 __PACKAGE__->mk_ro_accessors(qw/config schema/);
 
 
+sub rs {
+    my ($self, $model) = @_;
+
+    return $self->schema->resultset('Mittag::DB::Schema::' . $model);
+}
+
+
 sub save_weekly {
     my ($self, %arg) = @_;
 
@@ -23,7 +30,7 @@ sub save_weekly {
 
     my ($from, $to) = __from_to($arg{week});
 
-    return $self->schema->resultset('Mittag::Schema::WeeklyOffer')->find_or_create(
+    return $self->rs('WeeklyOffer')->find_or_create(
         place_id  => $arg{id},
         from_date => $from,
         to_date   => $to,
@@ -39,7 +46,7 @@ sub save {
         croak "$_ missing" unless $arg{$_};
     }
 
-    return $self->schema->resultset('Mittag::Schema::DailyOffer')->find_or_create({
+    return $self->rs('DailyOffer')->find_or_create({
         place_id  => $arg{id},
         date      => $arg{date},
         name      => $arg{meal},

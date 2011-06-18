@@ -1,4 +1,4 @@
-package Mittag::Schema::Component::Place;
+package Mittag::DB::Component::Place;
 
 use strict;
 use warnings;

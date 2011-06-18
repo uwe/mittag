@@ -7,7 +7,7 @@ extends 'WebNano';
 use FindBin;
 use Template;
 
-use Mittag::Schema;
+use Mittag::DB::Schema;
 
 
 has config => (is => 'ro', isa => 'HashRef', required => 1);
@@ -18,7 +18,7 @@ has tt     => (is => 'ro', lazy => 1, builder => '_build_tt');
 sub _build_schema {
     my ($self) = @_;
 
-    return Mittag::Schema->connect_with_config($self->config);
+    return Mittag::DB::Schema->connect_with_config($self->config);
 }
 
 sub _build_tt {
@@ -34,7 +34,7 @@ sub _build_tt {
 sub rs {
     my ($self, $model) = @_;
 
-    return $self->schema->resultset('Mittag::Schema::' . $model);
+    return $self->schema->resultset('Mittag::DB::Schema::' . $model);
 }
 
 sub render {

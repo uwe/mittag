@@ -10,15 +10,15 @@ use Module::Find qw/useall/;
 
 use lib $FindBin::Bin . '/../lib';
 use Mittag::Config;
+use Mittag::DB::Schema;
 use Mittag::Importer;
-use Mittag::Schema;
 
 
 my $config = Mittag::Config->new($FindBin::Bin . '/..');
 my $path   = $FindBin::Bin . '/../data';
 
 
-my $schema   = Mittag::Schema->connect_with_config($config);
+my $schema   = Mittag::DB::Schema->connect_with_config($config);
 my $importer = Mittag::Importer->new({
     config => $config,
     schema => $schema,

@@ -1,4 +1,4 @@
-package Mittag::Schema;
+package Mittag::DB::Schema;
 
 use strict;
 use warnings;

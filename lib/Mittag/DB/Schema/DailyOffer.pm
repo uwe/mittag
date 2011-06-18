@@ -1,7 +1,7 @@
-package Mittag::Schema::DailyOffer;
+package Mittag::DB::Schema::DailyOffer;
 
 use namespace::autoclean;
-use DBIx::Class::Candy -components => [qw/InflateColumn::DateTime +Mittag::Schema::Component::Place/];
+use DBIx::Class::Candy -components => [qw/InflateColumn::DateTime +Mittag::DB::Component::Place/];
 
 
 table 'daily_offer';
