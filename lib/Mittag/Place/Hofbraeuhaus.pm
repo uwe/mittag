@@ -72,7 +72,7 @@ sub extract {
             $meal = '';
             $self->_expect('***', shift @data);
 
-            last if $data[0] eq 'Mittagskarte als Download (pdf-Datei)';
+            last if $data[0] =~ /Mittagskarte als Download/;
         }
         else {
             $line =~ s/^\s+//;

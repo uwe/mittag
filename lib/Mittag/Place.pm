@@ -57,7 +57,7 @@ sub abort {
 
     die sprintf(
         '%s: %s',
-        ref $self,
+        $self,
         $message,
         ###TODO### Data::Dump::dump $self->context,
     );
