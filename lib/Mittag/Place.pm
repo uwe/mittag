@@ -55,7 +55,12 @@ sub _find {
 sub abort {
     my ($self, $message) = @_;
 
-    die $message; ###TODO###, Data::Dump::dump $self->context;
+    die sprintf(
+        '%s: %s',
+        ref $self,
+        $message,
+        ###TODO### Data::Dump::dump $self->context,
+    );
 }
 
 sub _trim {
