@@ -21,11 +21,9 @@ my $importer = Mittag::Importer->new({
 });
 
 my @places = useall 'Mittag::Place';
-
 if ($ARGV[0]) {
     @places = grep { /Mittag::Place::$ARGV[0]/ } @places;
 }
-
 foreach my $class (@places) {
     next unless $class->type eq 'web';
     # load file

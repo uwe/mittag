@@ -17,7 +17,7 @@ sub _expect {
     my ($self, $text, $data, $start) = @_;
 
     if ($start) {
-        # 0 - $data starts with $text (can be longer)
+        # 1 - $data starts with $text (can be longer)
         if (index($data, $text)) {
             $self->abort("expected: '$text', found '$data'");
         }
