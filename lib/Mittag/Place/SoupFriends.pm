@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 sub id      { 6 }
 sub file    { 'soup-friends.txt' }
 sub name    { 'Soup & Friends' }
+sub type    { 'web' }
 sub address { 'Valentinskamp 18, 20354 Hamburg' }
 sub geocode { [53.55504, 9.98615] }
 

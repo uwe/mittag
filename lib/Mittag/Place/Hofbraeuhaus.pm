@@ -12,6 +12,7 @@ use base qw/Mittag::Place/;
 sub id      { 4 }
 sub file    { 'hofbraeuhaus.txt' }
 sub name    { 'Hofbräuhaus' }
+sub type    { 'web' }
 sub address { 'Esplanade 6, 20354 Hamburg' }
 sub geocode { [53.55759, 9.99149] }
 

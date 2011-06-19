@@ -15,7 +15,6 @@ use Mittag::Importer;
 
 
 my $config = Mittag::Config->new($FindBin::Bin . '/..');
-my $path   = $FindBin::Bin . '/../data';
 
 
 my $schema   = Mittag::DB::Schema->connect_with_config($config);
@@ -31,8 +30,9 @@ if ($ARGV[0]) {
 }
 
 foreach my $class (@places) {
+    next unless $class->type eq 'web';
     # load file
-    my $file = $path . '/' . $class->file;
+    my $file = $config->{path_web} . $class->file;
     my $data = read_file $file, binmode => ':utf8';
     $class->extract($data, $importer);
 }

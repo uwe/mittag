@@ -11,16 +11,14 @@ use Mittag::Config;
 use Mittag::Downloader;
 
 
-my $path = $FindBin::Bin . '/../data';
-
-
 my $config     = Mittag::Config->new($FindBin::Bin . '/..');
 my $downloader = Mittag::Downloader->new({
     config => $config,
-    path   => $path,
+    path   => $config->{path_web},
 });
 
 my @places = useall 'Mittag::Place';
 foreach my $class (@places) {
+    next unless $class->type eq 'web';
     $class->download($downloader);
 }

@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 sub id      { 1 }
 sub file    { 'block-house.txt' }
 sub name    { 'Block House' }
+sub type    { 'web' }
 sub address { 'Gänsemarkt Passage, 20354 Hamburg' }
 sub geocode { [53.55535, 9.98941] }
 

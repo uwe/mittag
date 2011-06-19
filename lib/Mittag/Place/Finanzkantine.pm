@@ -12,6 +12,7 @@ use base qw/Mittag::Place/;
 sub id      { 2 }
 sub file    { 'finanzkantine.txt' }
 sub name    { 'Finanzkantine' }
+sub type    { 'web' }
 sub address { 'Gänsemarkt 36, 20354 Hamburg' }
 sub geocode { [53.55527, 9.98767] }
 

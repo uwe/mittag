@@ -13,6 +13,7 @@ use base qw/Mittag::Place/;
 sub id      { 5 }
 sub file    { 'schauspielhaus.html' }
 sub name    { 'Schauspielhaus' }
+sub type    { 'web' }
 sub address { 'Kirchenallee 39, 20099 Hamburg' }
 sub geocode { [53.5545378, 10.008363] }
 

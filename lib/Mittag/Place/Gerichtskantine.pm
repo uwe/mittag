@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 sub id      { 3 }
 sub file    { 'gerichtskantine.txt' }
 sub name    { 'Gerichtskantine' }
+sub type    { 'web' }
 sub address { 'Sievekingplatz 1, 20355 Hamburg' }
 sub geocode { [53.5561, 9.97656] }
 

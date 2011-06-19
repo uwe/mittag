@@ -22,6 +22,17 @@ sub new {
         $config = { %$config, %$local };
     }
 
+    # check for undef
+    while (my ($key, $value) = each %$config) {
+        next if defined $value;
+        croak "Config key '$key' not specified in config-local.pl";
+    }
+
+    # expand base path
+    foreach my $value (values %$config) {
+        $value =~ s/__BASE__/$path/;
+    }
+
     return bless $config, $class;
 }
 
