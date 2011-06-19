@@ -12,7 +12,7 @@ sub file    { '' }
 sub name    { 'Opera' }
 sub type    { 'mail' }
 sub address { 'Dammtorstr. 7, 20354 Hamburg' }
-sub geocode { [0, 0] }
+sub geocode { [53.55689, 9.98755] }
 
 
 my %MONTH = (
