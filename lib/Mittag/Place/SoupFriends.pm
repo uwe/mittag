@@ -34,7 +34,7 @@ sub download {
 sub extract {
     my ($self, $data, $importer) = @_;
 
-    my @data = grep { $_ } map { _trim($_) } split /\n/, $data;
+    my @data = $self->_trim_split($data);
 
     # without 'alt' texts
     @data = grep { $_ !~ /^Beschreibung: / } @data;
@@ -105,18 +105,6 @@ sub _meal {
     $price2 =~ s/,/./;
 
     return [$meal, $price2];
-}
-
-sub _trim {
-    my ($text) = @_;
-    return unless $text;
-
-    $text =~ s/\s/ /g;
-    $text =~ s/^ +//;
-    $text =~ s/ +$//;
-    $text =~ s/ {2,}/ /g;
-
-    return $text;
 }
 
 

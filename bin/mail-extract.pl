@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Email::MIME;
 use File::Slurp  qw/read_file/;
 use FindBin;
 use Module::Find qw/useall/;
@@ -20,16 +21,17 @@ my $importer = Mittag::Importer->new({
     schema => $schema,
 });
 
-my @places = useall 'Mittag::Place';
+my @places = grep { $_->type eq 'mail' } useall 'Mittag::Place';
 
 if ($ARGV[0]) {
     @places = grep { /Mittag::Place::$ARGV[0]/ } @places;
 }
 
-foreach my $class (@places) {
-    next unless $class->type eq 'web';
-    # load file
-    my $file = $config->{path_web} . $class->file;
-    my $data = read_file $file, binmode => ':utf8';
-    $class->extract($data, $importer);
+foreach my $file (glob $config->{path_mail} . '*.txt') {
+    my $data = read_file $file;
+    my $mail = Email::MIME->new($data);
+
+    foreach my $class (@places) {
+        $class->extract($mail, $importer);
+    }
 }

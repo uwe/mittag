@@ -19,11 +19,11 @@ sub _expect {
     if ($start) {
         # 0 - $data starts with $text (can be longer)
         if (index($data, $text)) {
-            die "expected: '$text', found '$data'";
+            $self->abort("expected: '$text', found '$data'");
         }
     } else {
         if ($data ne $text) {
-            die "expected: '$text', found: '$data'";
+            $self->abort("expected: '$text', found: '$data'");
         }
     }
 }
@@ -68,6 +68,12 @@ sub _trim {
     $text =~ s/ {2,}/ /g;
 
     return $text;
+}
+
+sub _trim_split {
+    my ($self, $data) = @_;
+
+    return grep { $_ } map { $self->_trim($_) } split /\n/, $data;
 }
 
 

@@ -34,7 +34,7 @@ sub extract {
     my ($self, $data, $importer) = @_;
 
     # trim, remove empty lines
-    my @data = grep { $_ } map { _trim($_) } split /\n/, $data;
+    my @data = $self->_trim_split($data);
 
     # date range
     $self->_search('Mittagstisch', \@data);
@@ -82,19 +82,6 @@ sub extract {
     }
 
     $self->abort('end of meal (price) not found') unless @data;
-}
-
-###TODO### utility class
-sub _trim {
-    my ($text) = @_;
-    return unless $text;
-
-    $text =~ s/\s/ /g;
-    $text =~ s/^ +//;
-    $text =~ s/ +$//;
-    $text =~ s/ {2,}/ /g;
-
-    return $text;
 }
 
 
