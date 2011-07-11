@@ -29,5 +29,6 @@ foreach my $class (@places) {
     # load file
     my $file = $config->{path_web} . $class->file;
     my $data = read_file $file, binmode => ':utf8';
-    $class->extract($data, $importer);
+    eval { $class->extract($data, $importer) };
+    warn $@ if $@;
 }

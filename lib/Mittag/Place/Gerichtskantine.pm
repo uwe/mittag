@@ -101,7 +101,7 @@ sub extract {
 sub _date {
     my ($date) = @_;
 
-    if ($date =~ /^(\d\d)\.(\d\d)\.(\d\d\d\d)$/) {
+    if ($date =~ /^(\d\d)\.+(\d\d)\.+(\d\d\d\d)$/) {
         return join('-', $3, $2, $1);
     }
 

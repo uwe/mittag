@@ -42,7 +42,7 @@ sub extract {
     $self->_search('Speisenkarte', \@data);
 
     my $line = shift @data;
-    unless ($line =~ /^\d\d\.\d\d\. -? ?(\d\d)\.(\d\d)\.(\d{4}) Kleine$/) {
+    unless ($line =~ /^\d\d\.\d\d\. -? ?(\d\d)\.(\d\d)\.(\d{4})/) {
         die "date not found: $line";
     }
     my $date = DateTime->new(
@@ -50,6 +50,8 @@ sub extract {
         month => $2,
         year  => $3,
     )->subtract(days => 4);
+
+    shift @data if $data[0] eq 'Kleine';
 
     $self->_find(qr/Portion$/, \@data);
 
