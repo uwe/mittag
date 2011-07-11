@@ -1,5 +1,7 @@
 package Mittag::Place::SchweinskeHbf;
 
+###TODO### reuse SchweinskeNeustadt
+
 use utf8;
 use strict;
 use warnings;
@@ -23,23 +25,32 @@ my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.schweinske-mittagstisch.de/Speisekarten/HHHbf.pdf';
+    my $url = 'http://www.schweinske-mittagstisch.de/newsletter.html';
+
+    my $html = $downloader->get($url);
+
+    return unless $html =~ m|<script language="javascript" src="(http://[^/]+/generate-js/[^\"]+)"|;
+    my $javascript = $downloader->get($1);
+
+    return unless $javascript =~ m|<a href=\\"(http:[^"]+)\\" title=\\"Schweinske Mittagstisch Hauptbahnhof|;
+    $url = $1;
+    $url =~ s/\\//g; # remove escaping
 
     my $file = $self->file;
-    $file =~ s/\.txt$/.pdf/;
+    $file =~ s/\.txt$/.html/;
     $downloader->get_store($url, $file);
 
-    my $txt = $downloader->pdf2txt($file);
+    my $txt = $downloader->html2txt($file);
     $downloader->store($txt, $self->file);
 }
 
 sub extract {
     my ($self, $data, $importer) = @_;
 
-    my @data = split /\n/, $data;
+    my @data = $self->_trim_split($data);
 
     # date range
-    my ($day, $month, $year) = $self->_find(qr/^vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{4})$/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/^Ihr Mittagstisch vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{4})$/, \@data);
 
     my $date = DateTime->new(
         day   => $day,
@@ -47,14 +58,19 @@ sub extract {
         year  => $year,
     );
 
-    shift @data;
-
+    my $line = shift @data;
     foreach my $day (@weekdays) {
-        $self->_expect($day, shift @data);
-        while ($data[0] =~ /^M \d: ([^€]+)€\s*(\d+,\d\d)$/) {
-            my $meal  = $1;
-            my $price = $2;
-            $meal  =~ s/\s+$//;
+        $self->_expect($day, $line);
+
+        $line = shift @data;
+        while ($line =~ s/^M \d: //) {
+            my $meal = $line;
+
+            unless ($meal =~ s/\s*€\s*(\d+,\d\d)$//) {
+                $self->abort("price not found: $meal");
+            }
+
+            my $price = $1;
             $price =~ s/,/./;
 
             $importer->save(
@@ -62,14 +78,13 @@ sub extract {
                 date  => $date->ymd('-'),
                 meal  => $meal,
                 price => $price,
-            );
+                );
 
-            shift @data;
+            $line = shift @data;
         }
+
         $date = $date->add(days => 1);
     }
-            
-    ###TODO### second week?
 }
 
 
