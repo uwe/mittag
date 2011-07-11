@@ -85,6 +85,9 @@ sub extract {
                 $meal .= ' ' . shift @data;
             }
 
+            # cleanup foot notes
+            $meal =~ s/²+³//g;
+
             $importer->save(
                 id    => $self->id,
                 date  => $date->ymd('-'),
