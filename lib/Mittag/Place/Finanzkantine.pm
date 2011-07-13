@@ -17,7 +17,7 @@ sub address { 'Gänsemarkt 36, 20354 Hamburg' }
 sub geocode { [53.55527, 9.98767] }
 
 
-my @weekdays = qw(Mo Di Mi Do Fr);
+my @weekdays = qw/Mo Di Mi Do Fr/;
 my $regex    = qr/[IV]+\. (.+?) (\d+,\d\d) €(:? (\d+,\d\d) €)?$/; # no ^
 
 

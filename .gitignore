@@ -2,4 +2,5 @@
 .devel-local
 config-local.pl
 test
+*.tgz
 
