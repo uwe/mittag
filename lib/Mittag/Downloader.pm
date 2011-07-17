@@ -42,18 +42,22 @@ sub html2txt {
     my $file = $self->path . '/' . $name;
 
     my $txt;
-    IPC::Run3::run3 [qw/lynx --dump --nomargins --nolist --width=1000/, $file], undef, \$txt;
+    my $cmd = $self->config->{cmd_lynx};
+    IPC::Run3::run3 [$cmd, qw/--dump --nomargins --nolist --width=1000/, $file], undef, \$txt;
 
     return Encode::decode('utf8', $txt);
 }
 
 sub pdf2txt {
-    my ($self, $name) = @_;
+    my ($self, $name, $layout) = @_;
 
     my $file = $self->path . '/' . $name;
 
     my $txt;
-    IPC::Run3::run3 [qw/pdftotext -raw/, $file, '-'], undef, \$txt;
+    my $cmd = $self->config->{cmd_pdftotext};
+    my $arg = '-raw';
+    $arg = '-layout' if $layout;
+    IPC::Run3::run3 [$cmd, $arg, $file, '-'], undef, \$txt;
 
     return Encode::decode('utf8', $txt);
 }

@@ -50,7 +50,8 @@ sub extract {
     my @data = $self->_trim_split($data);
 
     # date range
-    my ($day, $month, $year) = $self->_find(qr/^Ihr Mittagstisch vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{4})$/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/^Ihr Mittagstisch vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{2,4})$/, \@data);
+    $year += 2000 if $year < 100;
 
     my $date = DateTime->new(
         day   => $day,
@@ -63,11 +64,16 @@ sub extract {
         $self->_expect($day, $line);
 
         $line = shift @data;
+        my $multi = 0;
         while ($line =~ s/^M \d: //) {
             my $meal = $line;
 
+          again:
             unless ($meal =~ s/\s*€\s*(\d+,\d\d)$//) {
-                $self->abort("price not found: $meal");
+                $self->abort("price not found: $meal") if $multi;
+                $multi = 1;
+                $meal .= ' ' . shift @data;
+                goto again;
             }
 
             my $price = $1;
@@ -81,6 +87,7 @@ sub extract {
                 );
 
             $line = shift @data;
+            $multi = 0;
         }
 
         $date = $date->add(days => 1);

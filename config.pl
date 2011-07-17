@@ -14,4 +14,8 @@
     # paths
     path_web  => '__BASE__/data/',
     path_mail => '__BASE__/mail/',
+
+    # commands
+    cmd_lynx      => 'lynx',
+    cmd_pdftotext => 'pdftotext',
 };

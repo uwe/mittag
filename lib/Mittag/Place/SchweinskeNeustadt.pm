@@ -48,7 +48,8 @@ sub extract {
     my @data = $self->_trim_split($data);
 
     # date range
-    my ($day, $month, $year) = $self->_find(qr/^Ihr Mittagstisch vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{4})$/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/^Ihr Mittagstisch vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{2,4})$/, \@data);
+    $year += 2000 if $year < 100;
 
     my $date = DateTime->new(
         day   => $day,
