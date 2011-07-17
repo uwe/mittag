@@ -24,6 +24,9 @@ sub index_action {
     my $today = DateTime->today;
     if ($today->dow > 5) {
         $today = $self->_next_date($today);
+
+        # go back if no data
+        $today = $self->_prev_date(DateTime->today) unless $today;
     }
 
     return $self->redirect('/day/' . $today->ymd('-'));
