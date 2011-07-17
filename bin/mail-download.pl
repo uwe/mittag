@@ -41,7 +41,5 @@ if ($count > 0) {
         );
         write_file($file, $mail);
     }
-
-    print "Downloaded $count messages.\n";
 }
 $pop->Close;
