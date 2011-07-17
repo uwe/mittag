@@ -14,7 +14,7 @@ sub file    { 'wirtschaftskantine.txt' }
 sub name    { 'Wirtschaftskantine' }
 sub type    { 'web' }
 sub address { 'Neuer Jungfernstieg 21, 20354 Hamburg' }
-sub geocode { [] }
+sub geocode { [53.55703, 9.99248] }
 
 
 sub download {

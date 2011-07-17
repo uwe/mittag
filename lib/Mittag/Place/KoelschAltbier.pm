@@ -14,7 +14,7 @@ sub file    { 'koelsch-altbier.txt' }
 sub name    { 'Kölsch und Altbierhaus' }
 sub type    { 'web' }
 sub address { 'Valentinskamp 89, 20354 Hamburg' }
-sub geocode { [] }
+sub geocode { [53.5558143, 9.9850255] }
 
 
 my @weekdays = qw/MONTAG DIENSTAG MITTWOCH DONNERSTAG FREITAG/;
