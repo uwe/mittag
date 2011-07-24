@@ -5,6 +5,7 @@ use warnings;
 
 use File::Slurp  qw/read_file/;
 use FindBin;
+use Getopt::Long;
 use Module::Find qw/useall/;
 
 use lib $FindBin::Bin . '/../lib';
@@ -13,10 +14,16 @@ use Mittag::DB::Schema;
 use Mittag::Importer;
 
 
+my $debug = 0;
+GetOptions(
+    'debug|d' => \$debug,
+);
+
 my $config   = Mittag::Config->new($FindBin::Bin . '/..');
 my $schema   = Mittag::DB::Schema->connect_with_config($config);
 my $importer = Mittag::Importer->new({
     config => $config,
+    debug  => $debug,
     schema => $schema,
 });
 

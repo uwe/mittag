@@ -115,7 +115,7 @@ sub _meal {
 
     while (@$data) {
         my $line = shift @$data;
-        if ($line =~ /^(\d,\d\d) €$/) {
+        if ($line =~ /^(\d,\d\d)/) {
             my $price = $1;
             $price =~ s/,/./;
             return ($meal, $price);

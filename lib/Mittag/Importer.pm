@@ -8,10 +8,11 @@ use warnings;
 use base qw/Class::Accessor::Faster/;
 
 use Carp qw/croak/;
+use Data::Dump qw/pp/;
 use DateTime;
 
 
-__PACKAGE__->mk_ro_accessors(qw/config schema/);
+__PACKAGE__->mk_ro_accessors(qw/config debug schema/);
 
 
 sub rs {
@@ -30,13 +31,17 @@ sub save_weekly {
 
     my ($from, $to) = __from_to($arg{week});
 
-    return $self->rs('WeeklyOffer')->find_or_create(
+    my %data = (
         place_id  => $arg{id},
         from_date => $from,
         to_date   => $to,
         name      => $arg{meal},
         price     => $arg{price},
     );
+
+    warn pp \%data if $self->debug;
+
+    return $self->rs('WeeklyOffer')->find_or_create(%data);
 }
 
 sub save {
@@ -46,12 +51,16 @@ sub save {
         croak "$_ missing" unless $arg{$_};
     }
 
-    return $self->rs('DailyOffer')->find_or_create({
+    my %data = (
         place_id  => $arg{id},
         date      => $arg{date},
         name      => $arg{meal},
         price     => $arg{price},
-    });
+    );
+
+    warn pp \%data if $self->debug;
+
+    return $self->rs('DailyOffer')->find_or_create(%data);
 }
 
 sub __from_to {
