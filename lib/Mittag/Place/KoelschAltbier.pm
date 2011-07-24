@@ -50,7 +50,7 @@ sub extract {
     foreach my $idx (qw/A B/) {
         my $line = shift @data;
 
-        unless ($line =~ /^Tipp $idx (.+) € ([0-9.]+)$/) {
+        unless ($line =~ /^Tipp $idx (.+) (?:€|EUR) ([0-9.]+)$/) {
             $self->abort("Weekly offer $idx not found: $line");
         }
 
@@ -66,7 +66,7 @@ sub extract {
     foreach my $weekday (@weekdays) {
         my $line = shift @data;
 
-        unless ($line =~ /^$weekday (.+) € ([0-9.]+)$/) {
+        unless ($line =~ /^$weekday (.+) (?:€|EUR) ([0-9.]+)$/) {
             $self->abort("Daily offer for $weekday not found: $line");
         }
 

@@ -84,6 +84,7 @@ sub _meal {
     while (@$data) {
         my $line = shift @$data;
         last if $line eq '€';
+        last if $line eq 'EUR';
         push @meal, $line;
     }
 
