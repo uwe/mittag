@@ -18,7 +18,6 @@ sub geocode { [53.55421, 9.98444] }
 
 
 my @weekdays  = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
-my @headlines = ('Tag', 'Angebot', 'Aus Wok & Pfanne', 'Paparazzi Spezial', 'Vegetarisch', 'Norddeutschland');
 
 
 sub download {
@@ -54,7 +53,12 @@ sub extract {
     # get starting positions for text
     my @pos;
     my $line = shift @data;
+    my @headlines = grep { $_ } split / {3,}/, $line;
+    $self->abort("Headlines not found: $line") unless $headlines[0] =~ /Tag$/;
     foreach my $headline (@headlines) {
+        $headline =~ s/^ +//;
+        $headline =~ s/ +$//;
+
         my $start = index($line, $headline);
         my $end   = $start + length $headline;
         push @pos, [$start, $end];
@@ -69,7 +73,7 @@ sub extract {
 
         push @copy, $line;
 
-        $count++ if $line =~ /€/;
+        $count++ if $line =~ /\d,\d\d (?:€|EUR)/;
         last if $count == 5;
 
         foreach my $pos (@pos) {
