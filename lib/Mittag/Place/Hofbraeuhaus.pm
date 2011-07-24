@@ -58,7 +58,7 @@ sub extract {
     my $meal = '';
     while (@data) {
         my $line = shift @data;
-        if ($line =~ /(\d+,\d\d) ?€$/) {
+        if ($line =~ /(\d+,\d\d) ?(?:€|EUR)$/) {
             my $price = $1;
             $price =~ s/,/./;
 

@@ -69,7 +69,7 @@ sub extract {
             my $meal = $line;
 
           again:
-            unless ($meal =~ s/\s*€\s*(\d+,\d\d)$//) {
+            unless ($meal =~ s/\s*(?:€|EUR)\s*(\d+,\d\d)$//) {
                 $self->abort("price not found: $meal") if $multi;
                 $multi = 1;
                 $meal .= ' ' . shift @data;

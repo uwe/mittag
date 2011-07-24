@@ -57,13 +57,18 @@ sub extract {
         year  => $year,
     );
 
+    my $multi = 0;
     foreach my $day (@weekdays) {
         $self->_expect($day, shift @data);
 
         my $meal = shift @data;
 
-        unless ($meal =~ s/\s*(\d+,\d\d)\s*€$//) {
-            $self->abort("price not found: $meal");
+      again:
+        unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
+            $self->abort("price not found: $meal") if $multi;
+            $multi = 1;
+            $meal .= ' ' . shift @data;
+            goto again;
         }
 
         my $price = $1;
