@@ -1,0 +1,14 @@
+Class::Accessor::Faster
+Data::Dump
+DateTime
+DateTime::Format::MySQL
+DBIx::Class
+DBIx::Class:Candy
+File::Slurp
+HTML::TableExtract
+IPC::Run3
+Module::Find
+Plack
+Template
+Template::Plugin::Komma
+WebNano

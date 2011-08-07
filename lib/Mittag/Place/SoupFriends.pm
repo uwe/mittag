@@ -8,6 +8,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 6 }
+sub url     { 'http://www.soupandfriends.de/tageshits.html' }
 sub file    { 'soup-friends.txt' }
 sub name    { 'Soup & Friends' }
 sub type    { 'web' }
@@ -15,17 +16,15 @@ sub address { 'Valentinskamp 18, 20354 Hamburg' }
 sub geocode { [53.55504, 9.98615] }
 
 
-my @weekdays = qw(Mo Di Mi Do Fr);
+my @weekdays = qw/Mo Di Mi Do Fr/;
 
 
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.soupandfriends.de/tageshits.html';
-
     my $file = $self->file;
     $file =~ s/.txt$/.html/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->html2txt($file);
     $downloader->store($txt, $self->file);

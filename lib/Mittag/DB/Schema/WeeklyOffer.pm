@@ -1,6 +1,5 @@
 package Mittag::DB::Schema::WeeklyOffer;
 
-use namespace::autoclean;
 use DBIx::Class::Candy -components => [qw/InflateColumn::DateTime +Mittag::DB::Component::Place/];
 
 

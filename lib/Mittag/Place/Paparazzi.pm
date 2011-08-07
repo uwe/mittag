@@ -16,6 +16,8 @@ sub type    { 'web' }
 sub address { 'Caffamacherreihe 1, 20350 Hamburg' }
 sub geocode { [53.55421, 9.98444] }
 
+sub url     { 'http://paparazzi-restaurant-hamburg.pace-berlin.de/wp-content/plugins/download-monitor/download.php?id=1' };
+
 
 my @weekdays  = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 
@@ -23,12 +25,9 @@ my @weekdays  = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 sub download {
     my ($self, $downloader) = @_;
 
-    ###TODO### next week is also available
-    my $url = 'http://paparazzi-restaurant-hamburg.pace-berlin.de/wp-content/plugins/download-monitor/download.php?id=1';
-
     my $file = $self->file;
     $file =~ s/.txt$/.pdf/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->pdf2txt($file, 1);
     $downloader->store($txt, $self->file);
