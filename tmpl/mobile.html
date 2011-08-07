@@ -15,11 +15,9 @@
   <body>
     <div data-role="page">
 	  <div data-role="header">
-        <h1>
-          [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]/[% mobile | html %]">[&lt;&lt;]</a>[% END %]
-          Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
-          [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]/[% mobile | html %]">[&gt;&gt;]</a>[% END %]
-        </h1>
+        [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]/1" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">[&lt;&lt;]</a>[% END %]
+        <h1>[% dow.${date.dow} | html %], [% date.dmy('.') %]</h1>
+        [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]/1" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-transition="slide">[&gt;&gt;]</a>[% END %]
       </div>
 
       <div data-role="content">
@@ -37,8 +35,8 @@
       </div>
 
       <div data-role="footer">
-        <h4>Alle Angaben ohne Gew&auml;hr!</h4>
-        <h4><b>Fehler</b>, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></h4>
+        <p>Alle Angaben ohne Gew&auml;hr!</p>
+        <p>Fehler, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></p>
       </div>
     </div>
 
