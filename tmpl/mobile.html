@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+[% USE Komma %]
+[% dow = ['', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'] %]
+<html>
+  <head>
+    <title>Tagesangebote: [% date.dmy('.') %]</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+  </head>
+
+  <body>
+    <div data-role="page">
+	  <div data-role="header">
+        <h1>
+          [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]/[% mobile | html %]">[&lt;&lt;]</a>[% END %]
+          Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
+          [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]/[% mobile | html %]">[&gt;&gt;]</a>[% END %]
+        </h1>
+      </div>
+
+      <div data-role="content">
+
+        <ul data-role="listview" data-filter="true">
+[% last_place = '' %]
+[% FOREACH offer = OFFERS %]
+[%   IF offer.place.name != last_place %]
+[%     last_place = offer.place.name %]
+          <li data-role="list-divider">[% offer.place.name | html %]</li>
+[%   END %]
+          <li>[% offer.name | html %] <span class="ui-li-count">[% offer.price | komma2 %] &euro;</span></li>
+[% END %]
+        </ul>
+      </div>
+
+      <div data-role="footer">
+        <h4>Alle Angaben ohne Gew&auml;hr!</h4>
+        <h4><b>Fehler</b>, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></h4>
+      </div>
+    </div>
+
+  </body>
+</html>

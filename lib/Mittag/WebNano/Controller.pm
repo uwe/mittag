@@ -49,7 +49,7 @@ sub places_action {
 }
 
 sub day_action {
-    my ($self, $input_date) = @_;
+    my ($self, $input_date, $mobile) = @_;
 
     my @date = split /-/, $input_date;
     my $date = DateTime->new(
@@ -83,7 +83,13 @@ sub day_action {
         next_date => $self->_next_date($date->clone->add(     days => 1)) || undef,
     };
 
-    return $self->app->render('day.html', $vars);
+    my $template = 'day.html';
+    if ($mobile) {
+        $vars->{mobile} = 1;
+        $template = 'mobile.html';
+    }
+
+    return $self->app->render($template, $vars);
 }
 
 # same date or before
