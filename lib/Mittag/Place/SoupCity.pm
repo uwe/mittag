@@ -4,6 +4,8 @@ use utf8;
 use strict;
 use warnings;
 
+use DateTime;
+
 use base qw/Mittag::Place/;
 
 
@@ -13,7 +15,7 @@ sub file    { 'soupcity.txt' }
 sub name    { 'Soup City' }
 sub type    { 'web' }
 sub address { 'Steinstraße 17a, 20095 Hamburg' }
-sub geocode { [] }
+sub geocode { [53.54992, 10.00231] }
 
 
 my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
@@ -53,40 +55,40 @@ sub extract {
 
     # Friday to Monday
     my $date = DateTime->new(
-	day   => $day,
-	month => $month{$month},
-	year  => $year,
+        day   => $day,
+        month => $month{$month},
+        year  => $year,
     )->subtract(days => 4);
 
     foreach my $weekday (@weekdays) {
-	$self->_search($weekday, \@data);
+        $self->_search($weekday, \@data);
 
-	# two soups per day
-	foreach (1 .. 2) {
-	    my $meal = shift @data;
-	    my $price;
-	    while (my $line = shift @data) {
-		if ($line =~ /^(?:€|EUR) (\d+,\d\d)$/) {
-		    $price = $1;
-		    $price =~ s/,/./g;
-		    last;
-		}
-		$meal .= ' ' . $line;
-	    }
+        # two soups per day
+        foreach (1 .. 2) {
+            my $meal = shift @data;
+            my $price;
+            while (my $line = shift @data) {
+                if ($line =~ /^(?:€|EUR) (\d+,\d\d)$/) {
+                    $price = $1;
+                    $price =~ s/,/./g;
+                    last;
+                }
+                $meal .= ' ' . $line;
+            }
 
-	    unless ($price) {
-		$self->abort('end of meal not found');
-	    }
+            unless ($price) {
+                $self->abort('end of meal not found');
+            }
 
-	    $importer->save(
-		id    => $self->id,
-		date  => $date->ymd('-'),
-		meal  => $meal,
-		price => $price,
-	    );
-	}
+            $importer->save(
+                id    => $self->id,
+                date  => $date->ymd('-'),
+                meal  => $meal,
+                price => $price,
+            );
+        }
 
-	$date = $date->add(days => 1);
+        $date = $date->add(days => 1);
     }
 }
 

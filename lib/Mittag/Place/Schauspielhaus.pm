@@ -11,6 +11,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 5 }
+sub url     { 'http://diekantine.eu/index.php?action=menu&do=lunch' }
 sub file    { 'schauspielhaus.html' }
 sub name    { 'Schauspielhaus' }
 sub type    { 'web' }
@@ -30,9 +31,7 @@ my @headers = (
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://diekantine.eu/index.php?action=menu&do=lunch';
-
-    my $html = Encode::decode('windows-1252', $downloader->get($url));
+    my $html = Encode::decode('windows-1252', $downloader->get($self->url));
     $downloader->store($html, $self->file);
 }
 
@@ -45,7 +44,7 @@ sub extract {
     );
     $te->parse($data);
 
-    my $table = $te->first_table_found or die 'no table found';
+    my $table = $te->first_table_found or $self->abort('no table found.');
 
     my @days;
     foreach my $row ($table->rows) {
@@ -62,7 +61,7 @@ sub extract {
     foreach my $i (0 .. 4) {
         my $day = shift @{$days[$i]};
         unless ($day =~ /, (\d\d)\.(\d\d)\.(\d\d)$/) {
-            die 'no date found';
+            $self->abort("no date found: $day");
         }
         my $date = "20$3-$2-$1";
 

@@ -4,6 +4,8 @@ use utf8;
 use strict;
 use warnings;
 
+use DateTime;
+
 use base qw/Mittag::Place/;
 
 
