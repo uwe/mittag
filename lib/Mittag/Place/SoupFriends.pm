@@ -18,9 +18,6 @@ sub address { 'Valentinskamp 18, 20354 Hamburg' }
 sub geocode { [53.55504, 9.98615] }
 
 
-my @weekdays = qw/Mo Di Mi Do Fr/;
-
-
 sub download {
     my ($self, $downloader) = @_;
 
@@ -48,7 +45,7 @@ sub extract {
         year  => $year,
     );
 
-    foreach my $weekday (@weekdays) {
+    foreach my $weekday ($self->_weekdays_short) {
         $self->_search($weekday, \@data);
 
         splice(@data, 0, 2);

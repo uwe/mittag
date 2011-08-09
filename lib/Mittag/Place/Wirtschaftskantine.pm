@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 11 }
+sub url     { 'http://www.arbeitsgerichtskantine.de/save/wochenkarte_wk.pdf' }
 sub file    { 'wirtschaftskantine.txt' }
 sub name    { 'Wirtschaftskantine' }
 sub type    { 'web' }
@@ -23,11 +24,9 @@ my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.arbeitsgerichtskantine.de/save/wochenkarte_wk.pdf';
-
     my $file = $self->file;
     $file =~ s/.txt$/.pdf/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->pdf2txt($file, 1);
     $downloader->store($txt, $self->file);

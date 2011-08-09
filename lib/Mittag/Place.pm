@@ -7,10 +7,24 @@ use warnings;
 
 use base qw/Class::Accessor::Faster/;
 
-use Data::Dump qw//;
-
 
 __PACKAGE__->mk_accessors(qw/context/);
+
+
+my %MONTH = (
+    'Januar'    =>  1,
+    'Februar'   =>  2,
+    'März'      =>  3,
+    'April'     =>  4,
+    'Mai'       =>  5,
+    'Juni'      =>  6,
+    'Juli'      =>  7,
+    'August'    =>  8,
+    'September' =>  9,
+    'Oktober'   => 10,
+    'November'  => 11,
+    'Dezember'  => 12,
+);
 
 
 sub _expect {
@@ -59,7 +73,6 @@ sub abort {
         '%s: %s',
         $self,
         $message,
-        ###TODO### Data::Dump::dump $self->context,
     );
 }
 
@@ -79,6 +92,20 @@ sub _trim_split {
     my ($self, $data) = @_;
 
     return grep { $_ } map { $self->_trim($_) } split /\n/, $data;
+}
+
+sub _from_month {
+    my ($self, $month) = @_;
+
+    return $MONTH{$month};
+}
+
+sub _weekdays {
+    return qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
+}
+
+sub _weekdays_short {
+    return qw/Mo Di Mi Do Fr/;
 }
 
 

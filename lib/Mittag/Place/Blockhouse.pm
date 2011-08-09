@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 1 }
+sub url     { 'http://www.block-house.de/block-house-restaurant-best-steaks-since-1968/block-house-qualitaet-ist-unsere-leidenschaft/block-house-lunch-time/' }
 sub file    { 'block-house.html' }
 sub name    { 'Block House' }
 sub type    { 'web' }
@@ -17,15 +18,10 @@ sub address { 'Gänsemarkt Passage, 20354 Hamburg' }
 sub geocode { [53.55535, 9.98941] }
 
 
-my @weekdays = qw(Montag Dienstag Mittwoch Donnerstag Freitag);
-
-
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.block-house.de/block-house-restaurant-best-steaks-since-1968/block-house-qualitaet-ist-unsere-leidenschaft/block-house-lunch-time/'; # SEO gone mad :)
-
-    $downloader->get_store($url, $self->file);
+    $downloader->get_store($self->url, $self->file);
 }
 
 sub extract {
@@ -61,7 +57,7 @@ sub _extract_week {
     }
 
     # daily offer
-    foreach my $weekday (@weekdays) {
+    foreach my $weekday ($self->_weekdays) {
         my @day = @{shift @$data};
 
         my $line = shift @day;

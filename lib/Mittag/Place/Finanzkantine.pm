@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 2 }
+sub url     { 'http://www.kantine-der-finanzbehoerde.de/downloads/speisenkarte.pdf' }
 sub file    { 'finanzkantine.txt' }
 sub name    { 'Finanzkantine' }
 sub type    { 'web' }
@@ -17,18 +18,15 @@ sub address { 'Gänsemarkt 36, 20354 Hamburg' }
 sub geocode { [53.55527, 9.98767] }
 
 
-my @weekdays = qw/Mo Di Mi Do Fr/;
 my $regex    = qr/[IV]+\. (.+?) (\d+,\d\d) €(:? (\d+,\d\d) €)?$/; # no ^
 
 
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.kantine-der-finanzbehoerde.de/downloads/speisenkarte.pdf';
-
     my $file = $self->file;
     $file =~ s/\.txt$/.pdf/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->pdf2txt($file);
     $downloader->store($txt, $self->file);
@@ -55,7 +53,7 @@ sub extract {
 
     $self->_find(qr/Portion$/, \@data);
 
-    foreach my $weekday (@weekdays) {
+    foreach my $weekday ($self->_weekdays_short) {
         my @offer = ();
 
         unless ($data[0] =~ s/^$weekday\. //) {

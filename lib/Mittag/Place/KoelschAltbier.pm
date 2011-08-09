@@ -10,6 +10,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 10 }
+sub url     { 'http://www.koelsch-city.de/wp/?page_id=127' }
 sub file    { 'koelsch-altbier.txt' }
 sub name    { 'Kölsch und Altbierhaus' }
 sub type    { 'web' }
@@ -23,11 +24,9 @@ my @weekdays = qw/MONTAG DIENSTAG MITTWOCH DONNERSTAG FREITAG/;
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.koelsch-city.de/wp/?page_id=127';
-
     my $file = $self->file;
     $file =~ s/.txt$/.html/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->html2txt($file);
     $downloader->store($txt, $self->file);

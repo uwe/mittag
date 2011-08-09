@@ -19,15 +19,6 @@ sub address { 'Kirchenallee 39, 20099 Hamburg' }
 sub geocode { [53.5545378, 10.008363] }
 
 
-my @headers = (
-    qr/Montag/,
-    qr/Dienstag/,
-    qr/Mittwoch/,
-    qr/Donnerstag/,
-    qr/Freitag/,
-);
-
-
 sub download {
     my ($self, $downloader) = @_;
 
@@ -39,7 +30,7 @@ sub extract {
     my ($self, $data, $importer) = @_;
 
     my $te = HTML::TableExtract->new(
-        headers      => \@headers,
+        headers      => [ map { qr/$_/ } $self->_weekdays ],
         keep_headers => 1,
     );
     $te->parse($data);

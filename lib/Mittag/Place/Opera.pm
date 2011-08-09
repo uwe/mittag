@@ -15,22 +15,6 @@ sub address { 'Dammtorstr. 7, 20354 Hamburg' }
 sub geocode { [53.55689, 9.98755] }
 
 
-my %MONTH = (
-    Januar    =>  1,
-    Februar   =>  2,
-    März      =>  3,
-    April     =>  4,
-    Mai       =>  5,
-    Juni      =>  6,
-    Juli      =>  7,
-    August    =>  8,
-    September =>  9,
-    Oktober   => 10,
-    November  => 11,
-    Dezember  => 12,
-);
-
-
 sub extract {
     my ($self, $mail, $importer) = @_;
 
@@ -44,11 +28,11 @@ sub extract {
     my $month = $2;
     my $year  = $3;
 
-    unless (exists $MONTH{$month}) {
+    unless ($self->_from_month($month)) {
         $self->abort("month '$month' unknown");
     }
 
-    my $date = sprintf('%d-%02d-%02d', $year, $MONTH{$month}, $day);
+    my $date = sprintf('%d-%02d-%02d', $year, $self->_from_month($month), $day);
 
     my $data = (($mail->parts)[0]->parts)[0]->body_str;
     $data =~ s/\r//g;

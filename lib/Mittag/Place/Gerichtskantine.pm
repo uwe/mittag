@@ -8,6 +8,7 @@ use base qw/Mittag::Place/;
 
 
 sub id      { 3 }
+sub url     { 'http://diekantinen.de/index.php?sid=39&id=328' }
 sub file    { 'gerichtskantine.txt' }
 sub name    { 'Gerichtskantine' }
 sub type    { 'web' }
@@ -15,7 +16,6 @@ sub address { 'Sievekingplatz 1, 20355 Hamburg' }
 sub geocode { [53.5561, 9.97656] }
 
 
-my @weekdays  = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 my @mealtypes = ('Stammessen', 'Leichte Küche', 'Vegetarisch');
 my @holidays  = qw/wir wünschen einen schönen feiertag/;
 
@@ -23,11 +23,9 @@ my @holidays  = qw/wir wünschen einen schönen feiertag/;
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://diekantinen.de/index.php?sid=39&id=328';
-
     my $file = $self->file;
     $file =~ s/\.txt$/.html/;
-    my $html = $downloader->get($url);
+    my $html = $downloader->get($self->url);
     $downloader->store($html, $file);
 
     # find URL for PDF
@@ -35,7 +33,7 @@ sub download {
         die 'URL for PDF not found';
     }
 
-    $url = 'http://diekantinen.de/' . $1;
+    my $url = 'http://diekantinen.de/' . $1;
 
     $file = $self->file;
     $file =~ s/\.txt$/.pdf/;
@@ -53,9 +51,9 @@ sub extract {
 
     my @dates = ();
 
-    foreach my $day (@weekdays) {
+    foreach my $weekday ($self->_weekdays) {
         my $line = shift @data;
-        if ($line eq $day) {
+        if ($line eq $weekday) {
             push @dates, _date(shift @data);
         } else {
             # holiday?

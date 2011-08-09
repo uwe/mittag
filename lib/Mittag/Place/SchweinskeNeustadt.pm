@@ -10,6 +10,7 @@ use DateTime;
 
 
 sub id      { 9 }
+sub url     { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
 sub file    { 'schweinske-neustadt.txt' }
 sub name    { 'Schweinske (Neustadt)' }
 sub type    { 'web' }
@@ -17,21 +18,16 @@ sub address { 'Düsternstr. 1, 20355 Hamburg' }
 sub geocode { [53.550851, 9.985092] }
 
 
-my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
-
-
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.schweinske-mittagstisch.de/newsletter.html';
-
-    my $html = $downloader->get($url);
+    my $html = $downloader->get($self->url);
 
     return unless $html =~ m|<script language="javascript" src="(http://[^/]+/generate-js/[^\"]+)"|;
     my $javascript = $downloader->get($1);
 
     return unless $javascript =~ m|<a href=\\"(http:[^"]+)\\" title=\\"Schweinske Mittagstisch Neustadt|;
-    $url = $1;
+    my $url = $1;
     $url =~ s/\\//g; # remove escaping
 
     my $file = $self->file;
@@ -58,8 +54,8 @@ sub extract {
     );
 
     my $multi = 0;
-    foreach my $day (@weekdays) {
-        $self->_expect($day, shift @data);
+    foreach my $weekday ($self->_weekdays) {
+        $self->_expect($weekday, shift @data);
 
         my $meal = shift @data;
 
