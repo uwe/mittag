@@ -6,6 +6,7 @@ use warnings;
 use base qw/WebNano::Controller/;
 
 use DateTime;
+use JSON::XS;
 
 use Mittag::Places;
 
@@ -58,24 +59,18 @@ sub day_action {
         day   => $date[2],
     );
 
-    my @daily  = $self->app->rs('DailyOffer')->search({date => $date->ymd('-')});
+    my @offers = $self->_get_offers($date);
 
-    # nothing daily - holiday?
-    unless (@daily) {
+    unless (@offers) {
         my $next_date = $self->_next_date($date, 1);
+        # if there is no future date, we try backwards
+        $next_date ||= $self->_prev_date($date, 1);
 
         my $res = $self->req->new_response;
         $res->redirect('/day/' . $next_date->ymd('-'));
         return $res;
     }
-
-    my @weekly = $self->app->rs('WeeklyOffer')->search({
-        from_date => {'<=' => $date->ymd('-')},
-        to_date   => {'>=' => $date->ymd('-')},
-    });
-
-    my @offers = sort { $a->place->name cmp $b->place->name or $a->price <=> $b->price } (@daily, @weekly);
-
+    
     my $vars = {
         OFFERS    => \@offers,
         date      => $date,
@@ -90,6 +85,61 @@ sub day_action {
     }
 
     return $self->app->render($template, $vars);
+}
+
+sub rest_action {
+    my ($self, $input_date) = @_;
+
+    my @date = split /-/, $input_date;
+    my $date = DateTime->new(
+        year  => $date[0],
+        month => $date[1],
+        day   => $date[2],
+    );
+
+    # only allow narrow date range
+    my $today = DateTime->today;
+    my $delta = $today->delta_days($date)->days;
+    if ($delta > 3) {
+        return encode_json {};
+    }
+
+    my @offers = map {
+        {
+            place => $_->place->name,
+            meal  => $_->name,
+            price => $_->price,
+        }
+    } $self->_get_offers($date);
+
+    my $prev_date = $self->_prev_date($date->clone->subtract(days => 1));
+    my $next_date = $self->_next_date($date->clone->add(     days => 1));
+
+    return encode_json {
+        offers    => \@offers,
+        prev_date => $prev_date->ymd('-'),
+        next_date => $next_date->ymd('-'),
+    };
+}
+
+# --------------------------------------------------------------------------------
+
+# get daily and weekly offers (sorted by place and price)
+sub _get_offers {
+    my ($self, $date) = @_;
+
+    my @daily  = $self->app->rs('DailyOffer')->search({date => $date->ymd('-')});
+
+    return unless @daily;
+
+    my @weekly = $self->app->rs('WeeklyOffer')->search({
+        from_date => {'<=' => $date->ymd('-')},
+        to_date   => {'>=' => $date->ymd('-')},
+    });
+
+    my @offers = sort { $a->place->name cmp $b->place->name or $a->price <=> $b->price } (@daily, @weekly);
+
+    return @offers;
 }
 
 # same date or before
