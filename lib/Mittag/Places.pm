@@ -9,7 +9,13 @@ use Module::Find qw/useall/;
 
 
 my @places = useall 'Mittag::Place';
-my %place  = map { $_->id => $_->new } @places;
+my %place  = ();
+foreach my $place (@places) {
+    my $id = $place->id;
+    # 12: Paparazzi and Pararazzi2
+    die "ID $id used twice: $place{$id}" if $place{$id} and $id != 12;
+    $place{$id} = $place;
+}
 
 
 sub place_by_id {
