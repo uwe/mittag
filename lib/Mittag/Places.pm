@@ -14,7 +14,7 @@ foreach my $place (@places) {
     my $id = $place->id;
     # 12: Paparazzi and Pararazzi2
     die "ID $id used twice: $place{$id}" if $place{$id} and $id != 12;
-    $place{$id} = $place;
+    $place{$id} = $place->new;
 }
 
 
