@@ -40,6 +40,24 @@ sub rs {
 sub render {
     my ($self, $tmpl, $vars) = @_;
 
+    $vars->{MENU} = [
+        {
+            template => 'index.html',
+            url      => '/',
+            text     => 'Home',
+        },
+        {
+            template => 'day.html',
+            url      => '/day/',
+            text     => 'Tagesangebote',
+        },
+        {
+            template => 'place.html',
+            url      => '/place/',
+            text     => 'Lokale/Restaurants',
+        },
+    ];
+
     my $out = '';
     $self->tt->process($tmpl, $vars, \$out) or die $self->tt->error;
 

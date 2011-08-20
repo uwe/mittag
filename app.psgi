@@ -20,7 +20,7 @@ my $app = $webnano->psgi_app;
 builder {
     enable
         'Plack::Middleware::Static',
-        path => qr{^/(favicon.ico|robots.txt)$},
+        path => qr{^/(favicon.ico|robots.txt|main.css)$},
         root => $FindBin::Bin.'/static/';
 
     $app;

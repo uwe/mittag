@@ -22,15 +22,7 @@ sub redirect {
 sub index_action {
     my ($self) = @_;
 
-    my $today = DateTime->today;
-    if ($today->dow > 5) {
-        $today = $self->_next_date($today);
-
-        # go back if no data
-        $today = $self->_prev_date(DateTime->today) unless $today;
-    }
-
-    return $self->redirect('/day/' . $today->ymd('-'));
+    return $self->app->render('index.html');
 }
 
 sub place_action {
@@ -52,12 +44,28 @@ sub places_action {
 sub day_action {
     my ($self, $input_date, $mobile) = @_;
 
-    my @date = split /-/, $input_date;
-    my $date = DateTime->new(
-        year  => $date[0],
-        month => $date[1],
-        day   => $date[2],
-    );
+    my $date = eval {
+        my @date = split /-/, $input_date;
+        DateTime->new(
+            year  => $date[0],
+            month => $date[1],
+            day   => $date[2],
+        );
+    };
+    unless ($date) {
+        my $today = DateTime->today;
+        if ($today->dow > 5) {
+            $today = $self->_next_date($today);
+
+            # go back if no data
+            $today = $self->_prev_date(DateTime->today) unless $today;
+        }
+
+        my $url = '/day/' . $today->ymd('-');
+        $url .= '/1' if $mobile;
+
+        return $self->redirect($url);
+    }
 
     my @offers = $self->_get_offers($date);
 

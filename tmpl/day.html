@@ -1,38 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 [% USE Komma %]
 [% dow = ['', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'] %]
 <html>
   <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Tagesangebote: [% date.dmy('.') %]</title>
+
+  	<link type="text/css" href="/main.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
   </head>
-  <body>
-    <h1>
-      [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]">[&lt;&lt;]</a>[% END %]
-      Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
-      [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]">[&gt;&gt;]</a>[% END %]
-    </h1>
 
-    <table border="1" cellpadding="4" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Lokal</th>
-          <th>Mittagstisch</th>
-          <th>Preis</th>
-        </tr>
-      </thead>
-      <tbody>
-[% FOREACH offer = OFFERS %]
-        <tr>
-          <td><a href="/place/[% offer.place.id %]">[% offer.place.name | html %]</a></td>
-          <td>[% offer.name | html %]</td>
-          <td>[% offer.price | komma2 %]&euro;</td>
-        </tr>
+[% day_navi = BLOCK %]
+	<div id="naviTage">
+	  [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]">[&lt;&lt;]</a>[% END %]
+	  Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
+	  [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]">[&gt;&gt;]</a>[% END %]
+	</div>
 [% END %]
-      </tbody>
-    </table>
 
-    <p>Alle Angaben ohne Gew&auml;hr!</p>
+  <body>
+  	<div id="container">
+[% PROCESS _menu extra_menu = day_navi %]
 
-    <p><b>Fehler</b>, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></p>
-
+	  <div id="content">
+		<div>
+		  <table cellspacing="0" cellpadding="4" border="0">
+		    <thead>
+			  <tr>
+				<th class="first">Lokal</th>
+				<th>Mittagstisch</th>
+				<th>Preis</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  [% FOREACH offer = OFFERS %]
+			  <tr>
+				<td class="first"><a href="/place/[% offer.place.id %]" target="_blank">[% offer.place.name | html %]</a></td>
+				<td>[% offer.name | html %]</td>
+				<td>[% offer.price | komma2 %]&euro;</td>
+			  </tr>
+			  [% END %]
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
+[% PROCESS _footer %]
   </body>
 </html>

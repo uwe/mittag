@@ -1,0 +1,15 @@
+<div id="navigation">
+  <div id="navi">
+    <ul class="topNavi" id="topNavi">
+[% FOREACH m = MENU %]
+      <li>
+        <a class="[% IF m.template == component.caller %]current [%END %]level_1" href="[% m.url %]">
+          <span>[% m.text | html %]</span>
+        </a>
+      </li>
+[% END %]
+    </ul>
+[% extra_menu %]
+    <div class="clear"></div>
+  </div>
+</div>
