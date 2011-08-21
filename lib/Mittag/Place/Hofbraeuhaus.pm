@@ -9,22 +9,25 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 4 }
-sub file    { 'hofbraeuhaus.txt' }
-sub name    { 'Hofbräuhaus' }
-sub type    { 'web' }
-sub address { 'Esplanade 6, 20354 Hamburg' }
-sub geocode { [53.55759, 9.99149] }
+sub id       { 4 }
+sub url      { 'http://www.hamburg-hofbraeuhaus.de/mittagstisch.htm' }
+sub file     { 'hofbraeuhaus.txt' }
+sub name     { 'Hofbräuhaus' }
+sub type     { 'web' }
+sub address  { 'Esplanade 6
+20354 Hamburg' }
+sub phone    { '040/34993838' }
+sub email    { 'info@hamburg-hofbraeuhaus.de' }
+sub homepage { 'http://www.hamburg-hofbraeuhaus.de' }
+sub geocode  { [53.55759, 9.99149] }
 
 
 sub download {
     my ($self, $downloader) = @_;
 
-    my $url = 'http://www.hamburg-hofbraeuhaus.de/mittagstisch.htm';
-
     my $file = $self->file;
     $file =~ s/.txt$/.html/;
-    $downloader->get_store($url, $file);
+    $downloader->get_store($self->url, $file);
 
     my $txt = $downloader->html2txt($file);
     $downloader->store($txt, $self->file);

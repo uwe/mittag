@@ -10,13 +10,17 @@ use HTML::TableExtract;
 use base qw/Mittag::Place/;
 
 
-sub id      { 16 }
-sub url     { 'http://www.restaurant-franziskaner.de/de/mittag.htm' }
-sub file    { 'franziskaner.html' }
-sub name    { 'Franziskaner' }
-sub type    { 'web' }
-sub address { 'Große Theaterstr. 9, 20354 Hamburg' }
-sub geocode { [53.55637, 9.9907] }
+sub id       { 16 }
+sub url      { 'http://www.restaurant-franziskaner.de/de/mittag.htm' }
+sub file     { 'franziskaner.html' }
+sub name     { 'Franziskaner' }
+sub type     { 'web' }
+sub address  { 'Große Theaterstr. 9
+20354 Hamburg' }
+sub phone    { '040/345756' }
+sub email    { 'info@restaurant-franziskaner.de' }
+sub homepage { 'http://www.restaurant-franziskaner.de/' }
+sub geocode  { [53.55637, 9.9907] }
 
 
 sub download {

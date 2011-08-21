@@ -11,13 +11,17 @@ use base qw/Mittag::Place/;
 use DateTime;
 
 
-sub id      { 8 }
-sub url     { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
-sub file    { 'schweinske-hbf.txt' }
-sub name    { 'Schweinske (Hbf)' }
-sub type    { 'web' }
-sub address { 'Glockengießerwall 8, 20095 Hamburg' }
-sub geocode { [53.553215, 10.0054554] }
+sub id       { 8 }
+sub url      { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
+sub file     { 'schweinske-hbf.txt' }
+sub name     { 'Schweinske (Hbf)' }
+sub type     { 'web' }
+sub address  { 'Glockengießerwall 8
+20095 Hamburg' }
+sub phone    { }
+sub email    { }
+sub homepage { 'http://www.schweinske.de/' }
+sub geocode  { [53.553215, 10.0054554] }
 
 
 my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;

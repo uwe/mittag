@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 10 }
-sub url     { 'http://www.koelsch-city.de/wp/?page_id=127' }
-sub file    { 'koelsch-altbier.txt' }
-sub name    { 'Kölsch und Altbierhaus' }
-sub type    { 'web' }
-sub address { 'Valentinskamp 89, 20354 Hamburg' }
-sub geocode { [53.5558143, 9.9850255] }
+sub id       { 10 }
+sub url      { 'http://www.koelsch-city.de/wp/?page_id=127' }
+sub file     { 'koelsch-altbier.txt' }
+sub name     { 'Kölsch und Altbierhaus' }
+sub type     { 'web' }
+sub address  { 'Valentinskamp 89
+20354 Hamburg' }
+sub phone    { '040/352387' }
+sub email    { 'info@koelsch-city.de' }
+sub homepage { 'http://www.koelsch-city.de/' }
+sub geocode  { [53.5558143, 9.9850255] }
 
 
 my @weekdays = qw/MONTAG DIENSTAG MITTWOCH DONNERSTAG FREITAG/;

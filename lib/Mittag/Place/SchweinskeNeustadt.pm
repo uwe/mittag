@@ -9,13 +9,16 @@ use base qw/Mittag::Place/;
 use DateTime;
 
 
-sub id      { 9 }
-sub url     { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
-sub file    { 'schweinske-neustadt.txt' }
-sub name    { 'Schweinske (Neustadt)' }
-sub type    { 'web' }
-sub address { 'Düsternstr. 1, 20355 Hamburg' }
-sub geocode { [53.550851, 9.985092] }
+sub id       { 9 }
+sub url      { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
+sub file     { 'schweinske-neustadt.txt' }
+sub name     { 'Schweinske (Neustadt)' }
+sub type     { 'web' }
+sub address  { 'Düsternstr. 1, 20355 Hamburg' }
+sub phone    { }
+sub email    { }
+sub homepage { 'http://www.schweinske.de/' }
+sub geocode  { [53.550851, 9.985092] }
 
 
 sub download {

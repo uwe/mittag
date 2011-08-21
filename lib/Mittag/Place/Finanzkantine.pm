@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 2 }
-sub url     { 'http://www.kantine-der-finanzbehoerde.de/downloads/speisenkarte.pdf' }
-sub file    { 'finanzkantine.txt' }
-sub name    { 'Finanzkantine' }
-sub type    { 'web' }
-sub address { 'Gänsemarkt 36, 20354 Hamburg' }
-sub geocode { [53.55527, 9.98767] }
+sub id       { 2 }
+sub url      { 'http://www.kantine-der-finanzbehoerde.de/downloads/speisenkarte.pdf' }
+sub file     { 'finanzkantine.txt' }
+sub name     { 'Finanzkantine' }
+sub type     { 'web' }
+sub address  { 'Gänsemarkt 36
+20354 Hamburg' }
+sub phone    { '040/343185' }
+sub email    { 'luziangraun@aol.com' }
+sub homepage { 'http://www.kantine-der-finanzbehoerde.de/' }
+sub geocode  { [53.55527, 9.98767] }
 
 
 my $regex    = qr/[IV]+\. (.+?) (\d+,\d\d) €(:? (\d+,\d\d) €)?$/; # no ^

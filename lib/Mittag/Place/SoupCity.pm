@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 13 }
-sub url     { 'http://www.soupcity.de/aktuell/karte_st.html' }
-sub file    { 'soupcity.txt' }
-sub name    { 'Soup City' }
-sub type    { 'web' }
-sub address { 'Steinstraße 17a, 20095 Hamburg' }
-sub geocode { [53.54992, 10.00231] }
+sub id       { 13 }
+sub url      { 'http://www.soupcity.de/aktuell/karte_st.html' }
+sub file     { 'soupcity.txt' }
+sub name     { 'Soup City' }
+sub type     { 'web' }
+sub address  { 'Steinstraße 17a
+20095 Hamburg' }
+sub phone    { }
+sub email    { 'info@soupcity.de' }
+sub homepage { 'http://www.soupcity.de/' }
+sub geocode  { [53.54992, 10.00231] }
 
 
 my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;

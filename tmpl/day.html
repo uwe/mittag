@@ -6,45 +6,45 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Tagesangebote: [% date.dmy('.') %]</title>
 
-  	<link type="text/css" href="/main.css" rel="stylesheet">
+    <link type="text/css" href="/main.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
   </head>
 
 [% day_navi = BLOCK %]
-	<div id="naviTage">
-	  [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]">[&lt;&lt;]</a>[% END %]
-	  Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
-	  [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]">[&gt;&gt;]</a>[% END %]
-	</div>
+    <div id="naviTage">
+      [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]">[&lt;&lt;]</a>[% END %]
+      Tagesangebote: [% dow.${date.dow} | html %], [% date.dmy('.') %]
+      [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]">[&gt;&gt;]</a>[% END %]
+    </div>
 [% END %]
 
   <body>
-  	<div id="container">
+      <div id="container">
 [% PROCESS _menu extra_menu = day_navi %]
 
-	  <div id="content">
-		<div>
-		  <table cellspacing="0" cellpadding="4" border="0">
-		    <thead>
-			  <tr>
-				<th class="first">Lokal</th>
-				<th>Mittagstisch</th>
-				<th>Preis</th>
-			  </tr>
-			</thead>
-			<tbody>
-			  [% FOREACH offer = OFFERS %]
-			  <tr>
-				<td class="first"><a href="/place/[% offer.place.id %]" target="_blank">[% offer.place.name | html %]</a></td>
-				<td>[% offer.name | html %]</td>
-				<td>[% offer.price | komma2 %]&euro;</td>
-			  </tr>
-			  [% END %]
-			</tbody>
-		  </table>
-		</div>
-	  </div>
-	</div>
+      <div id="content">
+        <div>
+          <table cellspacing="0" cellpadding="4" border="0">
+            <thead>
+              <tr>
+                <th class="first">Lokal</th>
+                <th>Mittagstisch</th>
+                <th>Preis</th>
+              </tr>
+            </thead>
+            <tbody>
+              [% FOREACH offer = OFFERS %]
+              <tr>
+                <td class="first"><a href="/place/[% offer.place.id %]">[% offer.place.name | html %]</a></td>
+                <td>[% offer.name | html %]</td>
+                <td>[% offer.price | komma2 %]&euro;</td>
+              </tr>
+              [% END %]
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 [% PROCESS _footer %]
   </body>
 </html>

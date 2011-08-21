@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 11 }
-sub url     { 'http://www.arbeitsgerichtskantine.de/save/wochenkarte_wk.pdf' }
-sub file    { 'wirtschaftskantine.txt' }
-sub name    { 'Wirtschaftskantine' }
-sub type    { 'web' }
-sub address { 'Neuer Jungfernstieg 21, 20354 Hamburg' }
-sub geocode { [53.55703, 9.99248] }
+sub id       { 11 }
+sub url      { 'http://www.arbeitsgerichtskantine.de/save/wochenkarte_wk.pdf' }
+sub file     { 'wirtschaftskantine.txt' }
+sub name     { 'Wirtschaftskantine' }
+sub type     { 'web' }
+sub address  { 'Neuer Jungfernstieg 21
+20354 Hamburg' }
+sub phone    { '040/42834507' }
+sub email    { }
+sub homepage { 'http://www.arbeitsgerichtskantine.de/' }
+sub geocode  { [53.55703, 9.99248] }
 
 
 my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;

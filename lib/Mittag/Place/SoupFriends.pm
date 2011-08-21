@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 6 }
-sub url     { 'http://www.soupandfriends.de/tageshits.html' }
-sub file    { 'soup-friends.txt' }
-sub name    { 'Soup & Friends' }
-sub type    { 'web' }
-sub address { 'Valentinskamp 18, 20354 Hamburg' }
-sub geocode { [53.55504, 9.98615] }
+sub id       { 6 }
+sub url      { 'http://www.soupandfriends.de/tageshits.html' }
+sub file     { 'soup-friends.txt' }
+sub name     { 'Soup & Friends' }
+sub type     { 'web' }
+sub address  { 'Valentinskamp 18
+20354 Hamburg' }
+sub phone    { '040/34107810' }
+sub email    { 'soup.friends@googlemail.com' }
+sub homepage { 'http://www.soupandfriends.de/' }
+sub geocode  { [53.55504, 9.98615] }
 
 
 sub download {

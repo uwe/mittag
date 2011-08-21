@@ -45,6 +45,7 @@ sub day_action {
     my ($self, $input_date, $mobile) = @_;
 
     my $date = eval {
+        $input_date ||= '';
         my @date = split /-/, $input_date;
         DateTime->new(
             year  => $date[0],

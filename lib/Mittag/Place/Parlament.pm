@@ -7,13 +7,17 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub id      { 17 }
-sub url     { 'http://www.parlament-hamburg.de/pdf/Mittagskarte.pdf' }
-sub file    { 'parlament.txt' }
-sub name    { 'Parlament' }
-sub type    { 'web' }
-sub address { 'Rathausmarkt 1, 20095 Hamburg' }
-sub geocode { [53.55074, 9.99206] }
+sub id       { 17 }
+sub url      { 'http://www.parlament-hamburg.de/pdf/Mittagskarte.pdf' }
+sub file     { 'parlament.txt' }
+sub name     { 'Parlament' }
+sub type     { 'web' }
+sub address  { 'Rathausmarkt 1
+20095 Hamburg' }
+sub phone    { '040/70383399' }
+sub email    { 'gastro@parlament-hamburg.de' }
+sub homepage { 'http://www.parlament-hamburg.de/' }
+sub geocode  { [53.55074, 9.99206] }
 
 
 sub download {

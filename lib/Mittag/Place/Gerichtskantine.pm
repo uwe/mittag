@@ -7,13 +7,17 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub id      { 3 }
-sub url     { 'http://diekantinen.de/index.php?sid=39&id=328' }
-sub file    { 'gerichtskantine.txt' }
-sub name    { 'Gerichtskantine' }
-sub type    { 'web' }
-sub address { 'Sievekingplatz 1, 20355 Hamburg' }
-sub geocode { [53.5561, 9.97656] }
+sub id       { 3 }
+sub url      { 'http://diekantinen.de/index.php?sid=39&id=328' }
+sub file     { 'gerichtskantine.txt' }
+sub name     { 'Gerichtskantine' }
+sub type     { 'web' }
+sub address  { 'Sievekingplatz 1
+20355 Hamburg' }
+sub phone    { '040/35015293' }
+sub email    { }
+sub homepage { 'http://diekantinen.de/index.php?sid=39&id=328' }
+sub geocode  { [53.5561, 9.97656] }
 
 
 my @mealtypes = ('Stammessen', 'Leichte Küche', 'Vegetarisch');

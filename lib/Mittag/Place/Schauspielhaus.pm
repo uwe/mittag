@@ -10,13 +10,18 @@ use HTML::TableExtract;
 use base qw/Mittag::Place/;
 
 
-sub id      { 5 }
-sub url     { 'http://diekantine.eu/index.php?action=menu&do=lunch' }
-sub file    { 'schauspielhaus.html' }
-sub name    { 'Schauspielhaus' }
-sub type    { 'web' }
-sub address { 'Kirchenallee 39, 20099 Hamburg' }
-sub geocode { [53.5545378, 10.008363] }
+sub id        { 5 }
+sub url       { 'http://diekantine.eu/index.php?action=menu&do=lunch' }
+sub file      { 'schauspielhaus.html' }
+sub name      { 'Schauspielhaus' }
+sub type      { 'web' }
+sub address   { 'Gastronomie im Deutschen Schauspielhaus Hamburg
+Kirchenallee 39
+20099 Hamburg' }
+sub phone     { '040/24871273' }
+sub email     { }
+sub homepage  { 'http://diekantine.eu/' }
+sub geocode   { [53.5545378, 10.008363] }
 
 
 sub download {

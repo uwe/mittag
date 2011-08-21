@@ -9,13 +9,17 @@ use HTML::TableExtract;
 use base qw/Mittag::Place/;
 
 
-sub id      { 1 }
-sub url     { 'http://www.block-house.de/block-house-restaurant-best-steaks-since-1968/block-house-qualitaet-ist-unsere-leidenschaft/block-house-lunch-time/' }
-sub file    { 'block-house.html' }
-sub name    { 'Block House' }
-sub type    { 'web' }
-sub address { 'Gänsemarkt Passage, 20354 Hamburg' }
-sub geocode { [53.55535, 9.98941] }
+sub id       { 1 }
+sub url      { 'http://www.block-house.de/block-house-restaurant-best-steaks-since-1968/block-house-qualitaet-ist-unsere-leidenschaft/block-house-lunch-time/' }
+sub file     { 'block-house.html' }
+sub name     { 'Block House' }
+sub type     { 'web' }
+sub address  { 'Gänsemarkt Passage
+20354 Hamburg' }
+sub phone    { '040/346005' }
+sub email    { }
+sub homepage { 'http://www.block-house.de/' }
+sub geocode  { [53.55535, 9.98941] }
 
 
 sub download {

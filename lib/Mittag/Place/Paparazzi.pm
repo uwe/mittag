@@ -9,13 +9,17 @@ use DateTime;
 use base qw/Mittag::Place/;
 
 
-sub id      { 12 }
-sub url     { 'http://paparazzi-restaurant-hamburg.pace-berlin.de/wp-content/plugins/download-monitor/download.php?id=1' };
-sub file    { 'paparazzi.txt' }
-sub name    { 'Paparazzi' }
-sub type    { 'web' }
-sub address { 'Caffamacherreihe 1, 20350 Hamburg' }
-sub geocode { [53.55421, 9.98444] }
+sub id       { 12 }
+sub url      { 'http://paparazzi-restaurant-hamburg.pace-berlin.de/wp-content/plugins/download-monitor/download.php?id=1' };
+sub file     { 'paparazzi.txt' }
+sub name     { 'Paparazzi' }
+sub type     { 'web' }
+sub address  { 'Caffamacherreihe 1
+20350 Hamburg' }
+sub phone    { '040/34722540' }
+sub email    { 'info@paparazzi-restaurant-hamburg.de' }
+sub homepage { 'http://paparazzi-restaurant-hamburg.de/' }
+sub geocode  { [53.55421, 9.98444] }
 
 
 sub download {

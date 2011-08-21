@@ -7,12 +7,16 @@ use warnings;
 use base qw/Mittag::Place/;
 
 
-sub id      { 7 }
-sub file    { '' }
-sub name    { 'Opera' }
-sub type    { 'mail' }
-sub address { 'Dammtorstr. 7, 20354 Hamburg' }
-sub geocode { [53.55689, 9.98755] }
+sub id       { 7 }
+sub file     { '' }
+sub name     { 'Opera' }
+sub type     { 'mail' }
+sub address  { 'Dammtorstr. 7
+20354 Hamburg' }
+sub phone    { '040/341200' }
+sub email    { 'info@ristorante-opera.com' }
+sub homepage { 'http://www.ristorante-opera.com/' }
+sub geocode  { [53.55689, 9.98755] }
 
 
 sub extract {
