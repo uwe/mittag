@@ -55,7 +55,7 @@ sub extract {
 
     my @data = $self->_trim_split($data);
 
-    my ($day, $month, $year) = $self->_find(qr/^Tagessuppen \d+\. - (\d+)\. ([^ ]+) (\d{4})$/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/^Tagessuppen \d+\.(?: [^ ]+) - (\d+)\. ([^ ]+) (\d{4})$/, \@data);
 
     # Friday to Monday
     my $date = DateTime->new(
