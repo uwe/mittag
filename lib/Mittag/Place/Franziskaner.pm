@@ -39,7 +39,7 @@ sub extract {
     my $table = $te->first_table_found or $self->abort('table (1,3) not found.');
     my $text = $table->cell(0, 1);
 
-    unless ($text =~ /vom (\d{1,2})\. bis (\d{1,2})\. ([^ ]+) (\d{4}) 11.30 bis 15.00 Uhr/) {
+    unless ($text =~ /vom (\d{1,2})\.(?: [^ ]+) bis (\d{1,2})\. ([^ ]+) (\d{4}) 11.30 bis 15.00 Uhr/) {
         $self->abort("Date not found: $text");
     }
 
