@@ -68,7 +68,7 @@ sub extract {
 
         $line = shift @data;
         my $multi = 0;
-        while ($line =~ s/^M \d: //) {
+        while ($line =~ s/^M? ?\d(?:\:|\.) ?//) {
             my $meal = $line;
 
           again:
