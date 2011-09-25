@@ -32,14 +32,14 @@ sub download {
     $file =~ s/\.txt$/.pdf/;
     $downloader->get_store($self->url, $file);
 
-    my $txt = $downloader->pdf2txt($file);
+    my $txt = $downloader->pdf2txt($file, 1);
     $downloader->store($txt, $self->file);
 }
 
 sub extract {
     my ($self, $data, $importer) = @_;
 
-    my @data = split /\n/, $data;
+    my @data = $self->_trim_split($data);
 
     $self->_search('Speisenkarte', \@data);
 

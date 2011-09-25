@@ -38,110 +38,31 @@ sub extract {
 
     my @data = grep { $_ } split /\n/, $data;
 
-    my ($day, $month, $year) = $self->_find(qr/Speisenangebot vom (\d\d)\.(\d\d)\. bis \d\d\.\d\d\.(\d{4})/, \@data);
+    foreach my $weekday ($self->_weekdays) {
+        my ($day, $month, $year) = $self->_find(qr/^$weekday, (\d{1,2})\.(\d{1,2})\.(\d{2,4})$/, \@data);
+        my $date = DateTime->new(
+            day   => $day,
+            month => $month,
+            year  => $year,
+        );
 
-    # year is still 2010 :(
-    $year = 2011 if $year == 2010;
-
-    my $date = DateTime->new(
-        day   => $day,
-        month => $month,
-        year  => $year,
-    );
-
-    # get starting positions for text
-    my @pos;
-    my $line = shift @data;
-    my @headlines = grep { $_ } split / {3,}/, $line;
-    $self->abort("Headlines not found: $line") unless $headlines[0] =~ /Tag$/;
-    foreach my $headline (@headlines) {
-        $headline =~ s/^ +//;
-        $headline =~ s/ +$//;
-
-        my $start = index($line, $headline);
-        my $end   = $start + length $headline;
-        push @pos, [$start, $end];
-    }
-
-    # expand positions
-    my @copy;
-    my $count = 0;
-    while (@data) {
-        my $line = shift @data;
-        next unless $line;
-
-        push @copy, $line;
-
-        $count++ if $line =~ /\d,\d\d (?:€|EUR)/;
-        last if $count == 5;
-
-        foreach my $pos (@pos) {
-            my ($start, $end) = @$pos;
-            next if $start >= length $line;
-
-          go_left:
-            while ($start > 0 && substr($line, $start, 1) ne ' ') {
-                $start--;
-            }
-            if ($start > 0 && substr($line, $start - 1, 1) ne ' ') {
-                $start--;
-                goto go_left;
+        foreach (1..5) {
+            my $meal = shift @data;
+            unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
+                $self->abort("price not found: $meal");
             }
 
-          go_right:
-            while ($end < length $line && substr($line, $end - 1, 1) ne ' ') {
-                $end++;
-            }
-            if ($end < length $line && substr($line, $end, 1) ne ' ') {
-                $end++;
-                goto go_right;
-            }
+            my $price = $1;
+            $price =~ s/,/./;
 
-            # update boundaries
-            $pos->[0] = $start;
-            $pos->[1] = $end;
+            $importer->save(
+                id    => $self->id,
+                date  => $date->ymd('-'),
+                meal  => $meal,
+                price => $price,
+            );
         }
     }
-
-    # extract text
-    my @meal;
-    foreach my $line (@copy) {
-        if ($line =~ /([0-9,]+)[ €]+([0-9,]+)[ €]+([0-9,]+)[ €]+([0-9,]+)[ €]+([0-9,]+)/) {
-            my @price = ($1, $2, $3, $4, $5);
-            foreach my $meal (@meal) {
-                my $price = shift @price;
-                $price =~ s/,/./;
-
-                $importer->save(
-                    id    => $self->id,
-                    date  => $date->ymd('-'),
-                    meal  => $self->_fix_meal($meal),
-                    price => $price,
-                    );
-            }
-
-            @meal = ();
-            $date = $date->add(days => 1);
-            next;
-        }
-
-        foreach my $i (1 .. 5) {
-            my ($start, $end) = @{$pos[$i]};
-            last if $start > length $line;
-
-            $end = length $line if $end > length $line;
-            $meal[$i - 1] .= substr($line, $start, $end - $start);
-        }
-    }
-}
-
-sub _fix_meal {
-    my ($self, $meal) = @_;
-
-    $meal =~ s/Leichte Küche//;
-    $meal =~ s/Gutes aus der Region//;
-
-    return $self->_trim($meal);
 }
 
 
