@@ -85,10 +85,11 @@ sub _extract_week {
 
         next if $day[0] eq '— Himmelfahrt —';
         next if $day[0] eq '— Pfingstmontag —';
+        next if $day[0] eq '-Tag der Deutschen Einheit-';
 
         # price
         unless ($day[1] =~ /^(\d+,\d\d) €$/) {
-            $self->abort("price not found: $day[1]");
+            $self->abort("price not found: $day[0] $day[1]");
         }
         my $price = $1;
         $price =~ s/,/./;
