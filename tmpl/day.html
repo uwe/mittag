@@ -33,8 +33,14 @@
               </tr>
             </thead>
             <tbody>
+              [% SET last = '' %]
+              [% SET count = 1 %]
               [% FOREACH offer = OFFERS %]
-              <tr>
+                [% IF offer.place.name != last %]
+                  [% last = offer.place.name %]
+                  [% count = count + 1 %]
+                [% END %]
+              <tr[% IF count % 2 %] style="background: #F6F6F6"[% END %]>
                 <td class="first"><a href="/place/[% offer.place.id %]">[% offer.place.name | html %]</a></td>
                 <td>[% offer.name | html %]</td>
                 <td>[% offer.price | komma2 %]&euro;</td>
