@@ -55,7 +55,7 @@ sub extract {
 
     shift @data if $data[0] eq 'Kleine';
 
-    $self->_find(qr/Portion$/, \@data);
+    #$self->_find(qr/Portion$/, \@data);
 
     foreach my $weekday ($self->_weekdays_short) {
         my @offer = ();

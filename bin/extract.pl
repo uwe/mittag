@@ -33,6 +33,9 @@ if ($ARGV[0]) {
 }
 foreach my $class (@places) {
     next unless $class->type eq 'web';
+
+    print "$class\n" if $debug;
+
     # load file
     my $file = $config->{path_web} . $class->file;
     my $data = read_file $file, binmode => ':utf8';
