@@ -12,7 +12,7 @@ use DateTime;
 
 
 sub id       { 8 }
-sub url      { 'http://www.schweinske-mittagstisch.de/newsletter.html' }
+sub url      { 'http://www.schweinske-mittagstisch.de/aktuell.html' }
 sub file     { 'schweinske-hbf.txt' }
 sub name     { 'Schweinske (Hbf)' }
 sub type     { 'web' }

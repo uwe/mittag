@@ -56,7 +56,7 @@ sub extract {
     }
 
     # meals
-    $self->_search('Schnitzel-Variationen*:', \@data);
+    $self->_search('Schnitzel-Variationen:', \@data);
 
     my $meal = '';
     while (@data) {
@@ -75,7 +75,7 @@ sub extract {
             $meal = '';
             $self->_expect('***', shift @data);
 
-            last if $data[0] =~ /Mittagskarte als Download/;
+            last if $data[0] =~ /DOWNLOAD/;
         }
         else {
             $line =~ s/^\s+//;
