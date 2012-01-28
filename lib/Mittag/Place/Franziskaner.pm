@@ -43,11 +43,14 @@ sub extract {
         $self->abort("Date not found: $text");
     }
 
+    # Friday (usually)
     my $date = DateTime->new(
-        day   => $1,
+        day   => $2,
         month => $self->_from_month($3),
         year  => $4,
     );
+    # make it Monday
+    $date = $date->subtract(days => $date->dow - 1);
 
     $te = HTML::TableExtract->new(depth => 2, count => 1);
     $te->parse($data);

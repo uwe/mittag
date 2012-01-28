@@ -48,6 +48,8 @@ sub extract {
 
         foreach (1..5) {
             my $meal = shift @data;
+            next if $meal =~ /iPad.Gericht nach Wahl/;
+
             unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
                 $self->abort("price not found: $meal");
             }

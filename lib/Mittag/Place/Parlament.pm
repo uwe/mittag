@@ -38,11 +38,17 @@ sub extract {
 
     my ($day, $month) = $self->_find(qr/Montag, (\d\d)\.\s*([^ ]+) bis Samstag/, \@data);
 
-    ###TODO### year
-    my $year = 2011;
+    $month = $self->_from_month($month);
+
+    my $today = DateTime->today;
+    my $year = $today->year;
+
+    # special year end condition
+    $year-- if $month == 12 and $today->month == 1;
+
     my $date = DateTime->new(
         day   => $day,
-        month => $self->_from_month($month),
+        month => $month,
         year  => $year,
     );
 

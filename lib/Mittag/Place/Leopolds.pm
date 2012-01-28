@@ -58,7 +58,7 @@ sub extract {
         my ($weekday, $x, $y, $yp) = @$day;
 
         # weekday and date
-        my ($day, $month) = $self->_find(qr/$weekday, (\d+)\. ([^ ]+)$/, [$rows[$x][$y]]);
+        my ($day, $month) = $self->_find(qr/$weekday, +(\d+)\. ([^ ]+)/, [$rows[$x][$y]]);
         ###TODO### around New Year
         my $date = DateTime->new(
             day   => $day,

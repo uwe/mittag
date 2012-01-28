@@ -61,6 +61,8 @@ sub extract {
     my $meal = '';
     while (@data) {
         my $line = shift @data;
+        next if $line =~ /Mayonnaise oder Ketchup pro Portion:/;
+
         if ($line =~ /(\d+,\d\d) ?(?:€|EUR)$/) {
             my $price = $1;
             $price =~ s/,/./;
