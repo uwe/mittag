@@ -79,7 +79,7 @@ sub day_action {
         $res->redirect('/day/' . $next_date->ymd('-'));
         return $res;
     }
-    
+
     my $vars = {
         OFFERS    => \@offers,
         date      => $date,
