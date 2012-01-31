@@ -54,6 +54,7 @@ sub extract {
     )->subtract(days => 4);
 
     shift @data if $data[0] eq 'Kleine';
+    shift @data if $data[0] eq 'Portion';
 
     foreach my $weekday ($self->_weekdays_short) {
         my @offer = ();
