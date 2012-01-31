@@ -19,7 +19,7 @@ sub address  { 'Colonnaden 3
 20354 Hamburg' }
 sub phone    { '040/35710209' }
 sub email    { 'info@leopolds-wirtshaus.de' }
-sub homepage { 'http://www.leopolds-wirtshaus.de/'} 
+sub homepage { 'http://www.leopolds-wirtshaus.de/'}
 sub geocode  { [53.55495, 9.99042] }
 
 
