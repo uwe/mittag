@@ -57,7 +57,7 @@ sub extract {
     my $meal  = '';
     my $price = 0;
     while (my $line = shift @data) {
-        if ($line =~ /Wählen Sie ein 0,2 l Softgetränk für/) {
+        if ($line =~ /Wählen Sie ein 0,2 l Softgetränk /) {
             $importer->save_weekly(
                 id    => $self->id,
                 week  => $date->ymd('-'),
