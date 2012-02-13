@@ -23,13 +23,17 @@ sub homepage { 'http://www.leopolds-wirtshaus.de/'}
 sub geocode  { [53.55495, 9.99042] }
 
 
-my @days = (
-    ['Montag',     0, 0, 2],
-    ['Dienstag',   3, 0, 2],
-    ['Mittwoch',   0, 3, 6],
-    ['Donnerstag', 3, 3, 6],
-    ['Freitag',    6, 1, 4],
-);
+sub days {
+    return (
+        ['Montag',     0, 0, 2],
+        ['Dienstag',   3, 0, 2],
+        ['Mittwoch',   0, 3, 6],
+        ['Donnerstag', 3, 3, 6],
+        ['Freitag',    6, 1, 4],
+    );
+}
+
+sub single_column { 0 }
 
 
 sub download {
@@ -54,7 +58,7 @@ sub extract {
     $table = $te->first_table_found or $self->abort('no table found (#2).');
     my @html_rows = $table->rows;
 
-    foreach my $day (@days) {
+    foreach my $day ($self->days) {
         my ($weekday, $x, $y, $yp) = @$day;
 
         # weekday and date
@@ -67,7 +71,7 @@ sub extract {
         );
 
         my $meal  = do {
-            if ($html_rows[$x + 1][$y] =~ /^<strong>/) {
+            if ($html_rows[$x + 1][$y] =~ /^<strong>/ or $self->single_column) {
                 $rows[$x + 1][$y];
             }
             elsif ($html_rows[$x + 2][$y] =~ /^<strong>/) {
