@@ -2,6 +2,7 @@ package Mittag::Place;
 
 # base class for places (restaurants)
 
+use utf8;
 use strict;
 use warnings;
 
