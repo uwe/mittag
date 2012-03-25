@@ -5,6 +5,10 @@ use Mojo::Base 'Mojolicious::Controller';
 use DateTime;
 
 
+sub today {
+    return (shift)->redirect_to('today');
+}
+
 sub date {
     my ($self) = @_;
 
@@ -24,7 +28,6 @@ sub date {
             # go back if no data
             $today = $self->_prev_date(DateTime->today) unless $today;
         }
-
         $date = $today;
     }
 
@@ -35,9 +38,7 @@ sub date {
         # if there is no future date, we try backwards
         $next_date ||= $self->_prev_date($date, 1);
 
-        my $res = $self->req->new_response;
-        $res->redirect('/day/' . $next_date->ymd('-'));
-        return $res;
+        return $self->redirect_to(day => date => $next_date->ymd('-'));
     }
 
     $self->stash(

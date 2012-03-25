@@ -16,9 +16,7 @@ has schema => sub {
 
 
 sub rs {
-    my ($self, $model) = @_;
-
-    return $self->schema->resultset('Mittag::DB::Schema::' . $model);
+    return (shift)->schema->resultset('Mittag::DB::Schema::' . shift);
 }
 
 sub startup {
@@ -28,9 +26,10 @@ sub startup {
 
     my $r = $self->routes;
 
-    $r->route('/'         )->to('day#date');
-    $r->route('/day'      )->to('day#date');
-    $r->route('/day/:date')->to('day#date');
+    $r->route('/'         )->to('day#today');
+    $r->route('/day'      )->to('day#today');
+    $r->route('/day/:date')->to('day#date')->name('day');
+    $r->route('/day/today')->to('day#date')->name('today');
 }
 
 
