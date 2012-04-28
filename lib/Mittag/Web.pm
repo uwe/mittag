@@ -30,6 +30,9 @@ sub startup {
     $r->route('/day'      )->to('day#today');
     $r->route('/day/:date')->to('day#date')->name('day');
     $r->route('/day/today')->to('day#date')->name('today');
+
+    # compatibility with old mobile URLs
+    $r->route('/day/:date/1')->to('day#date');
 }
 
 
