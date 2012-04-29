@@ -69,6 +69,11 @@ sub extract {
     foreach my $weekday (@weekdays) {
         my $line = shift @data;
 
+        if ($line =~ /^$weekday GESCHLOSSEN /) {
+            $date = $date->add(days => 1);
+            next;
+        }
+
         unless ($line =~ /^$weekday (.+) (?:€|EUR) ([0-9.]+)$/) {
             $self->abort("Daily offer for $weekday not found: $line");
         }

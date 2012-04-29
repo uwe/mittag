@@ -63,8 +63,9 @@ sub extract {
             $self->abort("weekday '$weekday' not found: $data[0]");
         }
 
-        if ($data[0] !~ /^$regex/ and $data[0] =~ /\b(Feiertag|Pfinstmontag)\b/) {
+        if ($data[0] !~ /^$regex/ and $data[0] =~ /\b(Feiertag|Pfinstmontag|Maifeiertag)\b/) {
             shift @data;
+            shift @data if $data[0] =~ /(Tag der Arbeit)/;
             $date = $date->add(days => 1);
             next;
         }

@@ -77,7 +77,7 @@ sub extract {
             $meal = '';
             $self->_expect('***', shift @data);
 
-            last if $data[0] =~ /DOWNLOAD/;
+            last if $data[0] =~ /(DOWNLOAD|herunterzuladen)/;
         }
         else {
             $line =~ s/^\s+//;

@@ -37,8 +37,9 @@ foreach my $class (@places) {
     print "$class\n" if $debug;
 
     # load file
+    my $file = $config->{path_web} . $class->file;
+    next unless -f $file;
     eval {
-        my $file = $config->{path_web} . $class->file;
         my $data = read_file $file, binmode => ':utf8';
         $class->extract($data, $importer);
     };

@@ -46,9 +46,11 @@ sub extract {
             year  => $year,
         );
 
+        next if $data[0] =~ /Heute geschlossen/;
+
         foreach (1..5) {
             my $meal = shift @data;
-            next if $meal =~ /iPad.Gericht nach Wahl/;
+            next if $meal =~ /(iPad.Gericht nach Wahl|2 Gänge Axel-Springer Menü)/;
 
             unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
                 $self->abort("price not found: $meal");

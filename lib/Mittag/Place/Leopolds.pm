@@ -84,6 +84,8 @@ sub extract {
         $meal =~ s/ \*$//;
         $meal =~ s/^\* //;
 
+        next if $meal =~ /\bFeiertag\b/;
+
         my $price = $rows[$x + 1][$yp];
         $price =~ s/\s//g;
         $price =~ s/,/./;
