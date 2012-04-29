@@ -6,19 +6,19 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Tagesangebote: [% date.dmy('.') %]</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
   </head>
 
   <body>
     <div data-role="page">
       <div data-role="header">
-        [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]/1" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">[&lt;&lt;]</a>[% END %]
+        [% IF prev_date %]<a href="/day/[% prev_date.ymd('-') %]" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">[&lt;&lt;]</a>[% END %]
         <h1>[% dow.${date.dow} | html %], [% date.dmy('.') %]</h1>
-        [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]/1" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-transition="slide">[&gt;&gt;]</a>[% END %]
+        [% IF next_date %]<a href="/day/[% next_date.ymd('-') %]" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-transition="slide">[&gt;&gt;]</a>[% END %]
       </div>
 
       <div data-role="content">
@@ -35,7 +35,7 @@
         </ul>
       </div>
 
-      <div data-role="footer">
+      <div data-role="footer" data-id="mittag-footer" data-position="fixed">
         <p>Alle Angaben ohne Gew&auml;hr!</p>
         <p>Fehler, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></p>
       </div>

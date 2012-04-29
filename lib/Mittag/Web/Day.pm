@@ -1,52 +1,19 @@
-package Mittag::WebNano::Controller;
+package Mittag::Web::Day;
 
-use strict;
-use warnings;
-
-use base qw/WebNano::Controller/;
+use Mojo::Base 'Mojolicious::Controller';
 
 use DateTime;
-use JSON::XS;
-
-use Mittag::Places;
 
 
-sub redirect {
-    my ($self, $url) = @_;
-
-    my $res = $self->req->new_response;
-    $res->redirect($url);
-    return $res;
+sub today {
+    return (shift)->redirect_to('today');
 }
 
-sub index_action {
+sub date {
     my ($self) = @_;
-
-    return $self->app->render('index.html');
-}
-
-sub place_action {
-    my ($self, $place_id) = @_;
-
-    my $place = Mittag::Places->place_by_id($place_id);
-
-    return $self->redirect('/places') unless $place;
-
-    return $self->app->render('place.html', {place => $place});
-}
-
-sub places_action {
-    my ($self) = @_;
-
-    return $self->app->render('places.html');
-}
-
-sub day_action {
-    my ($self, $input_date, $mobile) = @_;
 
     my $date = eval {
-        $input_date ||= '';
-        my @date = split /-/, $input_date;
+        my @date = split /-/, $self->param('date') || '';
         DateTime->new(
             year  => $date[0],
             month => $date[1],
@@ -61,11 +28,7 @@ sub day_action {
             # go back if no data
             $today = $self->_prev_date(DateTime->today) unless $today;
         }
-
-        my $url = '/day/' . $today->ymd('-');
-        $url .= '/1' if $mobile;
-
-        return $self->redirect($url);
+        $date = $today;
     }
 
     my @offers = $self->_get_offers($date);
@@ -75,63 +38,16 @@ sub day_action {
         # if there is no future date, we try backwards
         $next_date ||= $self->_prev_date($date, 1);
 
-        my $res = $self->req->new_response;
-        $res->redirect('/day/' . $next_date->ymd('-'));
-        return $res;
+        return $self->redirect_to(day => date => $next_date->ymd('-'));
     }
 
-    my $vars = {
+    $self->stash(
         OFFERS    => \@offers,
         date      => $date,
         prev_date => $self->_prev_date($date->clone->subtract(days => 1)) || undef,
         next_date => $self->_next_date($date->clone->add(     days => 1)) || undef,
-    };
-
-    my $template = 'day.html';
-    if ($mobile) {
-        $vars->{mobile} = 1;
-        $template = 'mobile.html';
-    }
-
-    return $self->app->render($template, $vars);
-}
-
-sub rest_action {
-    my ($self, $input_date) = @_;
-
-    my @date = split /-/, $input_date;
-    my $date = DateTime->new(
-        year  => $date[0],
-        month => $date[1],
-        day   => $date[2],
     );
-
-    # only allow narrow date range
-    my $today = DateTime->today;
-    my $delta = $today->delta_days($date)->days;
-    if ($delta > 3) {
-        return encode_json {};
-    }
-
-    my @offers = map {
-        {
-            place => $_->place->name,
-            meal  => $_->name,
-            price => $_->price,
-        }
-    } $self->_get_offers($date);
-
-    my $prev_date = $self->_prev_date($date->clone->subtract(days => 1));
-    my $next_date = $self->_next_date($date->clone->add(     days => 1));
-
-    return encode_json {
-        offers    => \@offers,
-        prev_date => $prev_date->ymd('-'),
-        next_date => $next_date->ymd('-'),
-    };
 }
-
-# --------------------------------------------------------------------------------
 
 # get daily and weekly offers (sorted by place and price)
 sub _get_offers {

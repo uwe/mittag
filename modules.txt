@@ -8,7 +8,8 @@ File::Slurp
 HTML::TableExtract
 IPC::Run3
 Module::Find
-Plack
 Template
 Template::Plugin::Komma
-WebNano
+Mojolicious
+Mail::POP3Client
+Email::MIME
