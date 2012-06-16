@@ -33,6 +33,7 @@ if ($ARGV[0]) {
 }
 foreach my $class (@places) {
     next unless $class->type eq 'web';
+    next if $class->disabled;
 
     print "$class\n" if $debug;
 

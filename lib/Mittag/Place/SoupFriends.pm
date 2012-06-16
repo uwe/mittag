@@ -21,6 +21,8 @@ sub email    { 'soup.friends@googlemail.com' }
 sub homepage { 'http://www.soupandfriends.de/' }
 sub geocode  { [53.55504, 9.98615] }
 
+sub disabled { 1 }
+
 
 sub download {
     my ($self, $downloader) = @_;

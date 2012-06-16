@@ -28,6 +28,9 @@ my %MONTH = (
 );
 
 
+sub disabled {}
+
+
 sub _expect {
     my ($self, $text, $data, $start) = @_;
 
