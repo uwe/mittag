@@ -21,6 +21,8 @@ sub email    { 'info@soupcity.de' }
 sub homepage { 'http://www.soupcity.de/' }
 sub geocode  { [53.54992, 10.00231] }
 
+sub disabled { 1 }
+
 
 my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
 my %month = (
