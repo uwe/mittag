@@ -32,6 +32,9 @@ sub extract {
     my $month = $2;
     my $year  = $3;
 
+    # fix mistakes
+    $month = 'Februar' if $month eq 'februar';
+
     unless ($self->_from_month($month)) {
         $self->abort("month '$month' unknown");
     }
@@ -74,6 +77,8 @@ sub extract {
         $price =~ s/€//;
         $price =~ s/\s//g;
         $price =~ s/,/./;
+        # remove comments
+        $price =~ s/\([^)]+\)$//;
 
         unless ($price =~ /^\d{1,2}\.\d{2}$/) {
             $self->abort("Unknown price '$price'");
