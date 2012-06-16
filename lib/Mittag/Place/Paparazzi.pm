@@ -50,10 +50,15 @@ sub extract {
 
         foreach (1..5) {
             my $meal = shift @data;
+            next if $meal eq 'ESSENTIA';
             next if $meal =~ /(iPad.Gericht nach Wahl|2 Gänge Axel-Springer Menü)/;
 
             unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
-                $self->abort("price not found: $meal");
+                if ($data[0] =~ s/^\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
+                    shift @data;
+                } else {
+                    $self->abort("price not found: $meal");
+                }
             }
 
             my $price = $1;

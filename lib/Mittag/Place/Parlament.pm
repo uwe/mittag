@@ -36,7 +36,7 @@ sub extract {
 
     my @data = $self->_trim_split($data);
 
-    my ($day, $month) = $self->_find(qr/Montag, (\d\d)\.\s*([^ ]+) bis Samstag/, \@data);
+    my ($day, $month) = $self->_find(qr/Montag,? (\d\d)\.\s*([^ ]+) bis Samstag/, \@data);
 
     $month = $self->_from_month($month);
 
