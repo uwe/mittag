@@ -41,17 +41,20 @@ sub extract {
 
     my @data = $self->_trim_split($data);
 
-    $self->_search('Speisenkarte', \@data);
-
-    my $line = shift @data;
-    unless ($line =~ /^\d\d\.\d\d\. -? ?(\d\d)\.(\d\d)\.(\d{4})/) {
-        die "date not found: $line";
+    my $date;
+    while (my $line = shift @data) {
+        if ($line =~ /^\d\d\. ?\d\d\. -? ?(\d\d)\. ?(\d\d)\. ?(\d{4})/) {
+            $date = DateTime->new(
+                day   => $1,
+                month => $2,
+                year  => $3,
+            )->subtract(days => 4);
+            last;
+        }
     }
-    my $date = DateTime->new(
-        day   => $1,
-        month => $2,
-        year  => $3,
-    )->subtract(days => 4);
+    unless ($date) {
+        die "date not found.";
+    }
 
     shift @data if $data[0] =~ /Kleine$/;
     shift @data if $data[0] eq 'Portion';
