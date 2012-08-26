@@ -25,5 +25,8 @@ foreach my $class (@places) {
     next unless $class->type eq 'web';
     next if $class->disabled;
 
-    $class->download($downloader);
+    eval {
+        $class->download($downloader);
+    };
+    warn "$class: $@" if $@;
 }
