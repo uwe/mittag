@@ -2,6 +2,7 @@ package Mittag::Web;
 
 use FindBin;
 use Mojo::Base 'Mojolicious';
+use Number::Format;
 
 use Mittag::Config;
 use Mittag::DB::Schema;
@@ -20,7 +21,16 @@ sub rs {
 sub startup {
     my ($self) = @_;
 
-    $self->plugin('tt_renderer');
+    my $nf = Number::Format->new(
+        -thousands_sep   => '.',
+        -decimal_point   => ',',
+        -int_curr_symbol => '',
+    );
+
+    $self->helper(format_price => sub {
+        my ($self, $price) = @_;
+        $nf->format_price($price);
+    });
 
     my $r = $self->routes;
 
