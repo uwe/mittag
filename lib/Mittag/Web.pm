@@ -1,16 +1,14 @@
 package Mittag::Web;
 
+use FindBin;
 use Mojo::Base 'Mojolicious';
 
+use Mittag::Config;
 use Mittag::DB::Schema;
 
 
 has schema => sub {
-    my $config = {
-                  db_name => 'mittag',
-                  db_user => 'root',
-                  db_pass => 'root',
-                 };
+    my $config = Mittag::Config->new($FindBin::Bin . '/..');
     Mittag::DB::Schema->connect_with_config($config);
 };
 
