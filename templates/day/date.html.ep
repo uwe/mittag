@@ -34,7 +34,7 @@
         </ul>
       </div>
 
-      <div data-role="footer" data-id="mittag-footer">
+      <div class="ui-bar" data-role="footer" data-id="mittag-footer" data-position="fixed">
         <p>Alle Angaben ohne Gew&auml;hr! Fehler, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></p>
       </div>
     </div>
