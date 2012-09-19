@@ -7,9 +7,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.js"></script>
   </head>
 
   <body>
@@ -27,7 +27,7 @@
 % foreach my $offer (@$OFFERS) {
 %     if ($offer->place->name ne $last_place) {
 %         $last_place = $offer->place->name;
-          <li data-role="list-divider"><%= $offer->place->name %></li>
+          <li data-role="list-divider"><div><a href="/place/<%= $offer->place_id %>" data-role="button" data-icon="info" data-theme="b" rel="external"><%= $offer->place->name %></a></div></li>
 %     }
           <li><%= $offer->name %> <span class="ui-li-count"><%= format_price($offer->price) %> &euro;</span></li>
 % }
