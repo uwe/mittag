@@ -20,7 +20,12 @@ sub rs {
 sub startup {
     my ($self) = @_;
 
-    $self->plugin('tt_renderer');
+    $self->helper(format_price => sub {
+        my ($self, $price) = @_;
+        $price = sprintf('%.2f', $price);
+        $price =~ tr/./,/;
+        return $price;
+    });
 
     my $r = $self->routes;
 
@@ -28,6 +33,8 @@ sub startup {
     $r->route('/day'      )->to('day#today');
     $r->route('/day/:date')->to('day#date')->name('day');
     $r->route('/day/today')->to('day#date')->name('today');
+
+    $r->route('/place/:id')->to('place#show');
 
     # compatibility with old mobile URLs
     $r->route('/day/:date/1')->to('day#date');
