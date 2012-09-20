@@ -48,18 +48,27 @@ sub extract {
 
         next if $data[0] =~ /Heute geschlossen/;
 
-        foreach (1..5) {
-            my $meal = shift @data;
-            next if $meal eq 'ESSENTIA';
-            next if $meal =~ /(iPad.Gericht nach Wahl|2 Gänge Axel-Springer Menü)/;
+        MEAL:
+        {
+            my $meal = @data[0];
 
-            unless ($meal =~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
-                if ($data[0] =~ s/^\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
+            if ($meal eq 'ESSENTIA'
+                || $meal =~ /(iPad.Gericht nach Wahl|2 Gänge Axel-Springer Menü)/
+                || $meal =~ /Ihr Wunschgericht vom iPad/)
+            {
+                shift @data;
+                redo MEAL;
+            }
+
+            if ($meal !~ s/\s*(\d+,\d\d)\s*(?:€|EUR)$//) {
+                if ($data[1] =~ /^\s*(\d+,\d\d)\s*(?:€|EUR)$/) {
                     shift @data;
-                } else {
-                    $self->abort("price not found: $meal");
+                }
+                else {
+                    last MEAL;
                 }
             }
+            shift @data;
 
             my $price = $1;
             $price =~ s/,/./;
@@ -70,6 +79,8 @@ sub extract {
                 meal  => $meal,
                 price => $price,
             );
+
+            redo MEAL;
         }
     }
 }
