@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= $place->name %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.js"></script>
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+	<script>
+function resizeMap() {
+    var height = $(window).height() - $('#header').outerHeight(true);
+    var edge = $('#content').outerHeight();
+    $('#map_canvas').height(height - edge);
+}
+
+$(window).resize(resizeMap);
+
+$(document).ready(function() { // FIXME: couldn't make pageinit work
+    var point = new google.maps.LatLng(<%= $place->geocode->[0] %>, <%= $place->geocode->[1] %>);
+    var map = new google.maps.Map(
+        document.getElementById("map_canvas"),
+        {
+            zoom: 16,
+            center: point,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+    );
+    var marker = new google.maps.Marker({
+        position: point,
+        map: map,
+    });
+
+    resizeMap();
+});
+	</script>
+</head>
+<body>
+
+<div id="page" data-role="page">
+
+	<div id="header" data-role="header">
+	    <a href="/" data-icon="back" data-iconpos="notext" data-direction="reverse">Back</a>
+		<h1><%= $place->name %></h1>
+	</div>
+
+    <div id="content" data-role="content">
+
+        <div data-role="collapsible-set">
+            <div data-role="collapsible" data-collapsed="false">
+                <h2>Karte</h2>
+                <div id="map_canvas"></div>
+            </div>
+
+            <div data-role="collapsible">
+                <h2>Daten</h2>
+% my $address = Mojo::ByteStream->new($place->address)->trim->html_escape;
+% $address =~ s{\n}{<br/>}gmsx;
+                <p><%== $address %></p>
+% if ($place->phone) {
+                <p>Tel.: <%= $place->phone %></p>
+% }
+                <p><a href="<%= $place->homepage %>"><%= $place->homepage %></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

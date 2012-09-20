@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+% my $dow = ['', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Tagesangebote: <%= $date->dmy('.') %></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0-rc.1/jquery.mobile-1.2.0-rc.1.min.js"></script>
+  </head>
+
+  <body>
+    <div data-role="page">
+      <div data-role="header">
+        <% if ($prev_date) { %><a href="/day/<%= $prev_date->ymd('-') %>" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">[&lt;&lt;]</a><% } %>
+        <h1><%= $dow->[$date->dow] %>, <%= $date->dmy('.') %></h1>
+        <% if ($next_date) { %><a href="/day/<%= $next_date->ymd('-') %>" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-transition="slide">[&gt;&gt;]</a><% } %>
+      </div>
+
+      <div data-role="content">
+
+        <ul data-role="listview" data-filter="true">
+% my $last_place = '';
+% foreach my $offer (@$OFFERS) {
+%     if ($offer->place->name ne $last_place) {
+%         $last_place = $offer->place->name;
+          <li data-role="list-divider"><div><a href="/place/<%= $offer->place_id %>" data-role="button" data-icon="info" data-theme="b" rel="external"><%= $offer->place->name %></a></div></li>
+%     }
+          <li><%= $offer->name %> <span class="ui-li-count"><%= format_price($offer->price) %> &euro;</span></li>
+% }
+        </ul>
+      </div>
+
+      <div class="ui-bar" data-role="footer" data-id="mittag-footer" data-position="fixed">
+        <p>Alle Angaben ohne Gew&auml;hr! Fehler, Kommentare, neue Restaurants und Mithilfe gern an <a href="mailto:uwe@uwevoelker.de">uwe@uwevoelker.de</a></p>
+      </div>
+    </div>
+
+  </body>
+</html>
