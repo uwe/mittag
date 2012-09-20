@@ -50,7 +50,7 @@ sub extract {
 
         MEAL:
         {
-            my $meal = @data[0];
+            my $meal = $data[0];
 
             if ($meal eq 'ESSENTIA'
                 || $meal =~ /(iPad.Gericht nach Wahl|2 Gänge Axel-Springer Menü)/
