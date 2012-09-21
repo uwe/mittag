@@ -20,18 +20,4 @@ sub email    { 'info@hamburger-fischerstube.de' }
 sub homepage { 'http://www.hamburger-fischerstube.de/' }
 sub geocode  { [53.55757, 9.98978] }
 
-
-sub days {
-    return (
-        ['Montag',     0, 0, 2],
-        ['Dienstag',   2, 0, 2],
-        ['Mittwoch',   0, 3, 6],
-        ['Donnerstag', 2, 3, 6],
-        ['Freitag',    4, 1, 4],
-    );
-}
-
-sub single_column { 1 }
-
-
 1;

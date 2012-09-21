@@ -33,8 +33,6 @@ sub days {
     );
 }
 
-sub single_column { 0 }
-
 
 sub download {
     my ($self, $downloader) = @_;
@@ -71,7 +69,7 @@ sub extract {
         );
 
         my $meal  = do {
-            if ($html_rows[$x + 1][$y] =~ /^<strong>/ or $self->single_column) {
+            if ($html_rows[$x + 1][$y] =~ /^<strong>/) {
                 $rows[$x + 1][$y];
             }
             elsif ($html_rows[$x + 2][$y] =~ /^<strong>/) {
@@ -93,7 +91,7 @@ sub extract {
         $importer->save(
             id    => $self->id,
             date  => $date->ymd('-'),
-            meal  => $meal,
+            meal  => $self->_trim($meal),
             price => $price,
         );
     }
