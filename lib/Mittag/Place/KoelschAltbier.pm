@@ -49,12 +49,13 @@ sub extract {
         year  => $year,
     );
 
-    # weekly offers
-    foreach my $idx (qw/A B/) {
+    WEEKLY_OFFER:
+    {
         my $line = shift @data;
 
-        unless ($line =~ /^Tipp $idx (.+) (?:€|EUR) ([0-9.]+)$/) {
-            $self->abort("Weekly offer $idx not found: $line");
+        if ($line !~ /^Tipp [A-E] (.+) (?:€|EUR) ([0-9.]+)$/) {
+            unshift @data, $line;
+            last WEEKLY_OFFER;
         }
 
         $importer->save_weekly(
@@ -63,6 +64,8 @@ sub extract {
             meal  => $1,
             price => $2,
         );
+
+        redo WEEKLY_OFFER;
     }
 
     # daily offers
