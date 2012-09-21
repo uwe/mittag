@@ -91,7 +91,7 @@ sub extract {
             }
 
             # cleanup foot notes
-            $meal =~ s/²+³//g;
+            $meal =~ s/²\+³|2\+3//g;
 
             $importer->save(
                 id    => $self->id,
