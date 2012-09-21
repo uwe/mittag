@@ -7,7 +7,6 @@ use warnings;
 
 use base qw/Class::Accessor::Faster/;
 
-use Encode      qw//;
 use File::Slurp qw//;
 use IPC::Run3   qw//;
 use LWP::Simple qw//;
@@ -43,9 +42,10 @@ sub html2txt {
 
     my $txt;
     my $cmd = $self->config->{cmd_lynx};
-    IPC::Run3::run3 [$cmd, qw/--dump --nomargins --nolist --width=1000/, $file], undef, \$txt;
+    IPC::Run3::run3 [$cmd, qw/--dump --nomargins --nolist --width=1000 --assume_charset=utf-8/, $file], undef, \$txt;
 
-    return Encode::decode('utf8', $txt);
+    utf8::decode($txt);
+    return $txt;
 }
 
 sub pdf2txt {
@@ -59,7 +59,8 @@ sub pdf2txt {
     $arg = '-layout' if $layout;
     IPC::Run3::run3 [$cmd, $arg, $file, '-'], undef, \$txt;
 
-    return Encode::decode('utf8', $txt);
+    utf8::decode($txt);
+    return $txt;
 }
 
 
