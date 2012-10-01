@@ -43,7 +43,7 @@ sub extract {
 
     my $date;
     while (my $line = shift @data) {
-        if ($line =~ /^\d\d\. ?\d\d\. -? ?(\d\d)\. ?(\d\d)\. ?(\d{4})/) {
+        if ($line =~ /^\d\d?\. ?\d\d\.? -? ?(\d\d?)\. ?(\d\d)\. ?(\d{4})/) {
             $date = DateTime->new(
                 day   => $1,
                 month => $2,
