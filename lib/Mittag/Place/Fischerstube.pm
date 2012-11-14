@@ -20,4 +20,6 @@ sub email    { 'info@hamburger-fischerstube.de' }
 sub homepage { 'http://www.hamburger-fischerstube.de/' }
 sub geocode  { [53.55757, 9.98978] }
 
+sub table_index { 0 }
+
 1;

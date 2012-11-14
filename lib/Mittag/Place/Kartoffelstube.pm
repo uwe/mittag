@@ -20,5 +20,6 @@ sub email    { 'info@die-kartoffelstube.de' }
 sub homepage { 'http://www.die-kartoffelstube.de/' }
 sub geocode  { [53.55736, 9.98975] }
 
+sub table_index { 0 }
 
 1;

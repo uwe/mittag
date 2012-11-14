@@ -23,6 +23,7 @@ sub homepage { 'http://www.leopolds-wirtshaus.de/'}
 sub geocode  { [53.55495, 9.99042] }
 
 
+sub table_index { 1 }
 sub days {
     return (
         ['Montag',     0, 0, 2],
@@ -46,14 +47,14 @@ sub extract {
     my $te = HTML::TableExtract->new;
     $te->parse($data);
 
-    my $table = $te->first_table_found or $self->abort('no table found.');
+    my $table = ($te->tables)[$self->table_index] or $self->abort('no table found.');
     my @rows  = $table->rows;
 
     # raw HTML for detecting main course
     $te = HTML::TableExtract->new(keep_html => 1);
     $te->parse($data);
 
-    $table = $te->first_table_found or $self->abort('no table found (#2).');
+    $table = ($te->tables)[$self->table_index] or $self->abort('no table found (#2).');
     my @html_rows = $table->rows;
 
     foreach my $day ($self->days) {
