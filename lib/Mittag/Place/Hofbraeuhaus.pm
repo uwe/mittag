@@ -41,7 +41,7 @@ sub extract {
 
     # date range
     $self->_search('Mittagstisch', \@data);
-    my @date = $self->_find(qr/^(\d\d)\.(\d\d)\.(\d\d\d\d) . ?\d\d\.\d\d\.\d\d\d\d/, \@data);
+    my @date = $self->_find(qr/^(\d\d)\.(\d\d)\.(\d\d\d\d) (?:.|bis) ?\d\d\.\d\d\.\d\d\d\d/, \@data);
     my $week = join '-', reverse @date[0 .. 2];
 
     # correct Sunday to Friday
