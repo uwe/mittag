@@ -62,6 +62,8 @@ sub extract {
 
         # weekday and date
         my ($day, $month) = $self->_find(qr/$weekday, +(\d+)\. ([^ ]+)/, [$rows[$x][$y]]);
+        $month = 'November' if $month eq 'Novembe';
+
         ###TODO### around New Year
         my $date = DateTime->new(
             day   => $day,
