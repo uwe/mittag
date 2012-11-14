@@ -43,11 +43,11 @@ sub extract {
 
     my $date;
     while (my $line = shift @data) {
-        if ($line =~ /^\d\d?\. ?\d\d\.? -? ?(\d\d?)\. ?(\d\d)\. ?(\d{4})/) {
+        if ($line =~ /^\d\d?\. ?\d\d\.? -? ?(\d\d?)\. ?(\d\d)\. ?(?:\d\d)?(\d\d)/) {
             $date = DateTime->new(
                 day   => $1,
                 month => $2,
-                year  => $3,
+                year  => $3 + 2000,
             )->subtract(days => 4);
             last;
         }
