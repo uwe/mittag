@@ -47,7 +47,6 @@ sub extract {
 
     $self->_search('Mittagsgerichte', \@data);
 
-    MEAL:
     while (@data) {
         my ($meal, $price) = splice @data, 0, 2;
         last if $meal =~ /^Köttbullar/; # regular meals
@@ -63,8 +62,6 @@ sub extract {
             meal  => $meal,
             price => $price,
         );
-
-        redo MEAL;
     }
 }
 
