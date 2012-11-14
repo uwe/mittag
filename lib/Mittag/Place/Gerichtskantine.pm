@@ -103,8 +103,8 @@ sub extract {
 sub _date {
     my ($date) = @_;
 
-    if ($date =~ /^(\d\d)\.+(\d\d)\.+(\d\d\d\d)$/) {
-        return join('-', $3, $2, $1);
+    if ($date =~ /^(\d\d)\.+(\d\d)\.+\d\d?(\d\d)$/) {
+        return join('-', $3 + 2000, $2, $1);
     }
 
     die "wrong date format: '$date'";
