@@ -29,10 +29,12 @@ sub download {
 
     my $html = $downloader->get($self->url);
 
-    return unless $html =~ m|<script language="javascript" src="(http://[^/]+/generate-js/[^\"]+)"|;
+    die 'JavaScript not found'
+        unless $html =~ m|<script[^>]* src="(http://[^/]+/generate-js/[^\"]+)"|;
     my $javascript = $downloader->get($1);
 
-    return unless $javascript =~ m|<a href=\\"(http:[^"]+)\\" title=\\"Schweinske Mittagstisch Hauptbahnhof|;
+    die 'Page URL not found'
+        unless $javascript =~ m|<a href=\\"(http:[^"]+)\\" title=\\"Schweinske Mittagstisch Hauptbahnhof|;
     my $url = $1;
     $url =~ s/\\//g; # remove escaping
 
