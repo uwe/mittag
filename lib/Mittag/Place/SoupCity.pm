@@ -10,7 +10,7 @@ use base qw/Mittag::Place/;
 
 
 sub id       { 13 }
-sub url      { 'http://www.soupcity.de/aktuell/karte_st.html' }
+sub url      { 'http://www.soupcity.de/mittagstisch/steinstrasse' }
 sub file     { 'soupcity.txt' }
 sub name     { 'Soup City' }
 sub type     { 'web' }
@@ -20,25 +20,6 @@ sub phone    { }
 sub email    { 'info@soupcity.de' }
 sub homepage { 'http://www.soupcity.de/' }
 sub geocode  { [53.54992, 10.00231] }
-
-sub disabled { 1 }
-
-
-my @weekdays = qw/Montag Dienstag Mittwoch Donnerstag Freitag/;
-my %month = (
-    'Januar'    =>  1,
-    'Februar'   =>  2,
-    'März'      =>  3,
-    'April'     =>  4,
-    'Mai'       =>  5,
-    'Juni'      =>  6,
-    'Juli'      =>  7,
-    'August'    =>  8,
-    'September' =>  9,
-    'Oktober'   => 10,
-    'November'  => 11,
-    'Dezember'  => 12,
-);
 
 
 sub download {
@@ -57,46 +38,68 @@ sub extract {
 
     my @data = $self->_trim_split($data);
 
-    my ($day, $month, $year) = $self->_find(qr/^\d+\.(?: [^ ]+)? - (\d+)\. ([^ ]+) (\d{4})$/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/\d+\.(?: [^ ]+)? - (\d+)\. ([^ ]+) (\d{4})$/, \@data);
 
     # Friday to Monday
     my $date = DateTime->new(
         day   => $day,
-        month => $month{$month},
+        month => $self->_from_month($month),
         year  => $year,
     )->subtract(days => 4);
 
-    foreach my $weekday (@weekdays) {
-        $self->_search($weekday, \@data);
+    $self->_search('Tagessuppen', \@data);
 
+    my @daily_meals;
+    foreach (1 .. 5) {
         # two soups per day
         foreach (1 .. 2) {
-            my $meal = shift @data;
-            my $price;
-            while (my $line = shift @data) {
-                if ($line =~ /^(?:€|EUR) (\d+,\d\d)$/) {
-                    $price = $1;
-                    $price =~ s/,/./g;
-                    last;
-                }
-                $meal .= ' ' . $line;
-            }
-
-            unless ($price) {
-                $self->abort('end of meal not found');
-            }
-
-            $importer->save(
-                id    => $self->id,
-                date  => $date->ymd('-'),
-                meal  => $meal,
-                price => $price,
-            );
+            push @daily_meals, { date => $date->ymd('-'), $self->_extract(\@data) };
         }
 
         $date = $date->add(days => 1);
     }
+
+    $importer->save(%$_) foreach @daily_meals;
+
+    $self->_search('Wochensuppen', \@data);
+
+    my $week = $date->truncate(to => 'week');
+    my @weekly_meals;
+    until ($data[0] eq 'Newsletter') {
+        push @weekly_meals, { week => $week->ymd('-'), $self->_extract(\@data) };
+    }
+
+    $importer->save_weekly(%$_) foreach @weekly_meals;
 }
 
+sub _extract {
+    my ($self, $data) = @_;
+
+    my $meal = shift @$data;
+    my $price;
+    while (my $line = shift @$data) {
+        if ($line =~ /^(?:€|EUR) (\d+,\d\d)$/) {
+            $price = $1;
+            $price =~ s/,/./g;
+            last;
+        }
+        $meal .= ' ' . $line;
+    }
+
+    if ($data->[0] !~ /^(?:€|EUR) (\d+,\d\d)$/) {
+        # extra line
+        $meal .= ' ' . shift @$data;
+    }
+
+    unless ($price) {
+        $self->abort('end of meal not found');
+    }
+
+    return (
+        id    => $self->id,
+        meal  => $meal,
+        price => $price,
+    );
+}
 
 1;
