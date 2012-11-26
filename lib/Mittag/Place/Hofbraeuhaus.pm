@@ -75,7 +75,7 @@ sub extract {
             );
 
             $meal = '';
-            $self->_expect('***', shift @data);
+            $self->_search('***', \@data);
 
             last if $data[0] =~ /(DOWNLOAD|herunterzuladen)/;
         }
