@@ -22,7 +22,7 @@ sub homepage { 'http://www.kantine-der-finanzbehoerde.de/' }
 sub geocode  { [53.55527, 9.98767] }
 
 
-my $regex    = qr/[IVl]+\. (.+?) (\d+,\d\d) €(:? (\d+,\d\d) €)?$/; # no ^
+my $regex    = qr/[IVl]+\. (.+?) (\d+,\d\d) €(:? (\d+,\d\d)(?: €)?)?$/; # no ^
 
 
 sub download {
