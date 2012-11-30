@@ -15,9 +15,13 @@
   <body>
     <div data-role="page">
       <div data-role="header">
-        <% if ($prev_date) { %><a href="/day/<%= $prev_date->ymd('-') %>" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">[&lt;&lt;]</a><% } %>
         <h1><%= $dow->[$date->dow] %>, <%= $date->dmy('.') %></h1>
-        <% if ($next_date) { %><a href="/day/<%= $next_date->ymd('-') %>" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-transition="slide">[&gt;&gt;]</a><% } %>
+        <div data-role="navbar" data-iconpos="top">
+          <ul>
+            <li><a <% if ($prev_date) { %>href="/day/<%= $prev_date->ymd('-') %>"<% } else { %>class="ui-disabled"<% } %> data-icon="arrow-l" data-transition="slide" data-direction="reverse">Zurück</a></li>
+            <li><a <% if ($next_date) { %>href="/day/<%= $next_date->ymd('-') %>"<% } else { %>class="ui-disabled"<% } %> data-icon="arrow-r" data-transition="slide">Weiter</a></li>
+          </ul>
+        </div>
       </div>
 
       <div data-role="content">
