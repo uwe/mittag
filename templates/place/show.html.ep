@@ -10,7 +10,7 @@
 	<script>
 function resizeMap() {
     var height = $(window).height() - $('#header').outerHeight(true);
-    var edge = $('#content').outerHeight();
+    var edge = $('#content').outerHeight() - $('#map_canvas').height();
     $('#map_canvas').height(height - edge);
 }
 
