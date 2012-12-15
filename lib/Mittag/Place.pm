@@ -105,7 +105,7 @@ sub _trim_split {
 sub _from_month {
     my ($self, $month) = @_;
 
-    return $MONTH{$month} || die "Month '$month' unknown";
+    return $MONTH{$self->_trim($month)} || die "Month '$month' unknown";
 }
 
 sub _weekdays {
