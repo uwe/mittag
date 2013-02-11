@@ -20,7 +20,7 @@ sub homepage { 'http://diekantinen.de/index.php?sid=39&id=328' }
 sub geocode  { [53.5561, 9.97656] }
 
 
-my @mealtypes = ('Stammessen', 'Leichte Küche', 'Vegetarisch');
+my @mealtypes = ('Stammessen', ['Leichte', 'Küche'], 'Vegetarisch');
 my @holidays  = qw/wir wünschen einen schönen feiertag/;
 
 
@@ -71,7 +71,11 @@ sub extract {
     splice(@data, 0, 15);
 
     foreach my $type (@mealtypes) {
-        $self->_expect($type, shift @data, 1);
+        if (ref $type) {
+            $self->_expect($_, shift @data, 1) foreach (@$type);
+        } else {
+            $self->_expect($type, shift @data, 1);
+        }
 
         my $holiday_before = 0;
         foreach my $date (@dates) {
