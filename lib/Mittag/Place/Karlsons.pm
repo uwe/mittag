@@ -49,7 +49,7 @@ sub extract {
 
     while (@data) {
         my ($meal, $price) = splice @data, 0, 2;
-        last if $meal =~ /^Köttbullar/; # regular meals
+        last if $meal =~ /Köttbullar/; # regular meals
 
         s/\s*€//, s/,/./ for $price;
         unless ($price =~ /^\d{1,2}\.\d{2}$/) {

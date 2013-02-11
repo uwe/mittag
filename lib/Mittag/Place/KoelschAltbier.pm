@@ -41,7 +41,7 @@ sub extract {
 
     my @data = $self->_trim_split($data);
 
-    my ($day, $month, $year) = $self->_find(qr/^vom (\d\d)\.(\d\d)\.(\d{4}) bis (\d\d)\.(\d\d)\.(\d{4})/, \@data);
+    my ($day, $month, $year) = $self->_find(qr/^vom (\d\d)\.(\d\d)\.(\d{4})\D+(\d\d)\.(\d\d)\.(\d{4})/, \@data);
 
     my $date = DateTime->new(
         day   => $day,

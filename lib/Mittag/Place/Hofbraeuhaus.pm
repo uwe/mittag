@@ -62,6 +62,7 @@ sub extract {
     while (@data) {
         my $line = shift @data;
         next if $line =~ /Mayonnaise oder Ketchup pro Portion:/;
+        next if $line =~ /Ketchup\/Mayonnaise zzgl/;
 
         if ($line =~ /(\d+,\d\d) ?(?:€|EUR)$/) {
             my $price = $1;
@@ -74,10 +75,10 @@ sub extract {
                 price => $price,
             );
 
+            last if $data[0] =~ /(DOWNLOAD|herunterzuladen)/;
+
             $meal = '';
             $self->_search('***', \@data);
-
-            last if $data[0] =~ /(DOWNLOAD|herunterzuladen)/;
         }
         else {
             $line =~ s/^\s+//;
