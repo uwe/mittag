@@ -62,7 +62,7 @@ sub extract {
     foreach my $weekday ($self->_weekdays_short) {
         my @offer = ();
 
-        unless ($data[0] =~ s/^$weekday\. //) {
+        unless ($data[0] =~ s/^$weekday\.? //) {
             $self->abort("weekday '$weekday' not found: $data[0]");
         }
 

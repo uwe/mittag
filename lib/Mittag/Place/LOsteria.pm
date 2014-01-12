@@ -39,7 +39,7 @@ sub extract {
 
     my $date = DateTime->now->truncate(to => 'week');
 
-    $self->_search('Bei uns gibt es jede Woche etwas Besonderes.', \@data);
+    $self->_search('Bei uns gibt es jede Woche etwas besonderes', \@data);
 
     my $count = 0;
 
