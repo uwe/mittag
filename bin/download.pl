@@ -12,7 +12,7 @@ use Mittag::Config;
 use Mittag::Downloader;
 
 
-my $degug = 0;
+my $debug = 0;
 GetOptions(
     'debug|d' => \$debug,
 );
