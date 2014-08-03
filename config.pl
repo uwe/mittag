@@ -4,6 +4,7 @@
     db_name => 'mittag',
     db_user => undef,
     db_pass => undef,
+    db_host => 'localhost',
 
     # mail account
     mail_user => undef,
