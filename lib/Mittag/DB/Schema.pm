@@ -19,7 +19,7 @@ sub connect_with_config {
     }
 
     my @connect = (
-        join(':', 'dbi', 'mysql', $config->{db_name}, $config->{db_host},
+        join(':', 'dbi', 'mysql', $config->{db_name}, $config->{db_host}),
         $config->{db_user},
         $config->{db_pass},
         {mysql_enable_utf8 => 1},
