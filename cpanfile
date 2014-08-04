@@ -6,3 +6,4 @@ requires 'Class::Accessor';
 requires 'DateTime';
 requires 'HTML::TableExtract';
 requires 'Mojolicious';
+requires 'DBD::mysql';

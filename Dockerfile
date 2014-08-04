@@ -9,5 +9,6 @@ RUN cpanm --notest --installdeps .
 RUN cpanm --notest Starman
 
 ADD . /home/app
+RUN echo "{db_user=>'mittag',db_pass=>'mittag'}" >> config-local.pl
 
 CMD hypnotoad script/mittag_web
