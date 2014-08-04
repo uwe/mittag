@@ -10,4 +10,4 @@ RUN cpanm --notest --installdeps .
 ADD . /home/app
 RUN echo "{db_user=>'mittag',db_pass=>'mittag',db_host=>'mysql'}" >> config-local.pl
 
-CMD hypnotoad script/mittag_web
+CMD hypnotoad -f script/mittag_web
