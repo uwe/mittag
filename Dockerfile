@@ -6,9 +6,8 @@ RUN curl -L http://cpanmin.us | perl - App::cpanminus
 WORKDIR /home/app
 ADD cpanfile /home/app/
 RUN cpanm --notest --installdeps .
-RUN cpanm --notest Starman
 
 ADD . /home/app
-RUN echo "{db_user=>'mittag',db_pass=>'mittag'}" >> config-local.pl
+RUN echo "{db_user=>'mittag',db_pass=>'mittag',db_host=>'mysql'}" >> config-local.pl
 
 CMD hypnotoad script/mittag_web

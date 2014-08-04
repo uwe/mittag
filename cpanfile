@@ -3,7 +3,7 @@ requires 'DBIx::Class::Candy';
 requires 'IPC::Run3';
 requires 'LWP::Simple';
 requires 'Class::Accessor';
-requires 'DateTime';
+requires 'DateTime::Format::MySQL';
 requires 'HTML::TableExtract';
 requires 'Mojolicious';
 requires 'DBD::mysql';
