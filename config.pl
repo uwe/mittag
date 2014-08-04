@@ -6,15 +6,8 @@
     db_pass => undef,
     db_host => 'localhost',
 
-    # mail account
-    mail_user => undef,
-    mail_pass => undef,
-    mail_host => undef,
-    mail_ssl  => '',
-
     # paths
     path_web  => '__BASE__/data/',
-    path_mail => '__BASE__/mail/',
 
     # commands
     cmd_lynx      => 'lynx',

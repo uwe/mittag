@@ -1,5 +1,3 @@
-requires 'Mail::POP3Client';
-requires 'Email::MIME';
 requires 'Module::Find';
 requires 'DBIx::Class::Candy';
 requires 'IPC::Run3';
