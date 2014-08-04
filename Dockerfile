@@ -10,4 +10,4 @@ RUN cpanm --notest Starman
 
 ADD . /home/app
 
-CMD plackup
+CMD hypnotoad script/mittag_web
