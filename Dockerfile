@@ -10,4 +10,11 @@ RUN cpanm --notest --installdeps .
 ADD . /home/app
 RUN echo "{db_user=>'mittag',db_pass=>'mittag',db_host=>'mysql'}" >> config-local.pl
 
-CMD hypnotoad -f script/mittag_web
+# start hypnotoad via runit
+RUN mkdir /etc/service/mittag
+ADD runit.sh /etc/service/mittag/run
+
+# add cronjob (overwrites crontab)
+RUN echo "0 6,8,10 * * 1,6,7 /home/app/bin/cronjob.sh" | crontab -
+
+CMD ["/sbin/my_init"]
