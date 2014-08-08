@@ -1,6 +1,6 @@
 FROM phusion/baseimage
 RUN apt-get update -y
-RUN apt-get install -y build-essential perl libmysqlclient-dev
+RUN apt-get install -y build-essential perl libmysqlclient-dev lynx poppler-utils
 RUN curl -L http://cpanmin.us | perl - App::cpanminus
 
 WORKDIR /home/app
